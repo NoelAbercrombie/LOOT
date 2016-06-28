@@ -13,7 +13,8 @@
 #include "player.h"
 #include "menu.h"
 
-void setup() {
+void setup()
+{
 	ab.begin();
 
 	ab.fillScreen(0);
@@ -25,13 +26,13 @@ void setup() {
 	}
 }
 
-void loop() {
-  if(!ab.nextFrame())
-    return;
+void loop()
+{
+	if(!ab.nextFrame())
+		return;
 
-  ab.update();
+	ab.update();
 	ab.clear();
-  game.step();
-
+	game.step();
 	ab.display();
 }
