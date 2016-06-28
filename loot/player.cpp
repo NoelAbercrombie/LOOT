@@ -3,7 +3,7 @@
 #include "system.h"
 #include "direction.h"
 
-Player::Player(System & ab,World & world)
+Player::Player(System & ab, World & world)
 {
   this->ab = &ab;
   this->world = &world;
@@ -46,9 +46,9 @@ void Player::move(Direction dir, int8_t dist)
   jump(x + nx, y + ny);  //reduce duplicated code
 }
 
-void Player::jump(uint8_t x,uint8_t y)
+void Player::jump(uint8_t x, uint8_t y)
 {
-  if (world->get(x, y)==0)
+  if (world->get(x, y) == 0)
   {
     this->x = x;
     this->y = y;
