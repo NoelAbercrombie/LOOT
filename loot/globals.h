@@ -13,6 +13,6 @@
 System ab;
 World world;
 Menu menu(ab);
-Player player(ab,world);
-Render render(ab,world,player);
-Game game(ab,render,menu,player,world); //controls everything!
+Player player(ab, world);
+Render render(ab, world, player);
+Game game(ab, render, menu, player, world); //controls everything!
