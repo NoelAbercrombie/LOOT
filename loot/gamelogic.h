@@ -17,7 +17,7 @@ class Game
     Player * player;
 
   public:
-    Game(System & ab,Render & render,Menu & menu,Player & player,World & world);
+    Game(System & ab, Render & render, Menu & menu, Player & player, World & world);
 
     void step();
     void draw();
