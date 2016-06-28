@@ -9,6 +9,8 @@
 #define SCREEN_WIDTH  (WIDTH)
 #define SCREEN_HEIGHT (HEIGHT)
 
+// These should really be redefines of whatever the arduboy constants are
+// just in case the arduboy constants ever change.
 #define BTN_U (B00000001)
 #define BTN_D (B00000010)
 #define BTN_L (B00000100)
@@ -16,8 +18,10 @@
 #define BTN_A (B00010000)
 #define BTN_B (B00100000)
 
-struct System {
-  void begin() {
+struct System
+{
+  void begin()
+  {
     arduboy.begin();
     arduboy.setFrameRate(30);
     nowInput  = 0x00;
@@ -27,7 +31,8 @@ struct System {
     state = stateMenu;  //begin on the menu
   }
 
-  void update() {
+  void update()
+  {
     //input
     prevInput = nowInput;
     nowInput  = 0;
@@ -41,13 +46,18 @@ struct System {
     if(arduboy.pressed(B_BUTTON)) { nowInput |= BTN_B; }
   }
 
-  bool pressed(byte button) const {
+  bool pressed(byte button) const
+  {
      return (nowInput & button) != 0;
   }
-  bool pushed(byte button) const {
+  
+  bool pushed(byte button) const
+  {
     return (nowInput & button) != 0 && (prevInput & button) == 0; //If pressed this frame, but not last frame
   }
-  bool released(byte button) const {
+  
+  bool released(byte button) const
+  {
     return (prevInput & button) != 0 && (nowInput & button) == 0; //if released in the last frame
   }
 
@@ -57,11 +67,13 @@ struct System {
   void display() { arduboy.display(); }
   int frameCount() { return arduboy.frameCount; }
   bool everyXFrames(uint8_t frames) { return arduboy.everyXFrames(frames); }
-  void drawPixel(uint8_t x, uint8_t y,byte c) { arduboy.drawPixel(x,y,c); }
-  void drawBitmap(int8_t x,int8_t y,const byte* bitmap, uint8_t w,uint8_t h,byte c) {
-    arduboy.drawBitmap(x, y, bitmap, w,h, c);
+  // Mixing uint8_t and byte, a bit inconsistent
+  void drawPixel(uint8_t x, uint8_t y, byte c) { arduboy.drawPixel(x, y, c); }
+  void drawBitmap(int8_t x, int8_t y, const byte* bitmap, uint8_t w, uint8_t h, byte c)
+  {
+    arduboy.drawBitmap(x, y, bitmap, w, h, c);
   }
-  void drawLine(int8_t x,int8_t y,int8_t x2,int8_t y2,byte c)  { arduboy.drawLine(x,y,x2,y2,c);  }
+  void drawLine(int8_t x, int8_t y, int8_t x2, int8_t y2, byte c)  { arduboy.drawLine(x, y, x2, y2, c);  }
   void fillRect(int8_t x, int8_t y, uint8_t w, uint8_t h, byte c) { arduboy.fillRect(x, y, w, h, c); }
   void drawRect(int8_t x, int8_t y, uint8_t w, uint8_t h, byte c) { arduboy.drawRect(x, y, w, h, c); }
   void setCursor(uint8_t x, uint8_t y) { arduboy.setCursor(x, y); }
@@ -82,5 +94,5 @@ struct System {
   Arduboy arduboy;
   byte    nowInput;
   byte    prevInput;
-  uint8_t  lastState,lastFrameState,state;
+  uint8_t  lastState, lastFrameState, state;
 };
