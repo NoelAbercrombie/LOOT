@@ -1,10 +1,11 @@
 #pragma once
 #include <stdint.h>
-#include "menu.h"
-#include "render.h"
-#include "player.h"
-#include "world.h"
-#include "constants.h"
+
+class System;
+class Render;
+class Menu;
+class World;
+class Player;
 
 class Game
 {
