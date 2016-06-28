@@ -13,7 +13,7 @@ Render::Render(System & ab,World & world, Player & player)
 
 inline bool Render::wallCheck(int8_t x, int8_t y)
 {
-  return (world->get(x, y)==1);
+  return (world->get(x, y) == 1);
 }
 inline bool Render::itemCheck(int8_t x, int8_t y)
 {
@@ -82,7 +82,7 @@ void Render::step()
 {
   if(player->moved) //only recalculate on movement
   {
-    calculateView(player->x,player->y,player->dir);
+    calculateView(player->x, player->y, player->dir);
     player->moved = false;
   }
 }
@@ -95,55 +95,56 @@ void Render::draw()
 
 void Render::drawView()
 {
-  const uint8_t wallSize[] = { 6,10,18,32,64 };  //size in pixels of each step
-  char wall = 0;  //current wall
+  const uint8_t wallSize[] = { 6, 10, 18, 32, 64 };  //size in pixels of each step
+  char wall = 0;  //current wall, consider changing char to int8_t
 
-  int drawSize,halfSize,backSize,halfBackSize,left,leftBack,top,topBack;
-  for(char i=0; i<4; i++) //distance
+  int drawSize, halfSize, backSize, halfBackSize, left, leftBack, top, topBack; // Consider chaning int to int16_t for clarity
+  for(char i = 0; i < 4; i++) //distance
   {
-    drawSize = wallSize[i+1]; halfSize = drawSize/2;      //size of walls on screen
-    backSize = wallSize[i];   halfBackSize = backSize/2;  //size of the backside of the walls, for depth
-    leftBack = 32-(halfBackSize*3);      //x position of the walls on screen
-    left     = 32-(halfSize*3);
-    topBack  = 32-halfBackSize;         //y position of the walls on screen
-    top      = 32-halfSize;
+    drawSize = wallSize[i + 1]; halfSize = drawSize / 2;      //size of walls on screen
+    backSize = wallSize[i];   halfBackSize = backSize / 2;  //size of the backside of the walls, for depth
+    leftBack = 32 - (halfBackSize * 3);      //x position of the walls on screen
+    left     = 32 - (halfSize * 3);
+    topBack  = 32 - halfBackSize;         //y position of the walls on screen
+    top      = 32 - halfSize;
 
-    for(char n=0; n<3; n++) //left->right
+    for(char n = 0; n < 3; n++) //left->right. Consider changing char to int8_t. Also, try to preincrement loop variables
     {
-      if (wallShow[wall]) //if wall exists, draw it
+      if (wallShow[wall]) //if wall exists, draw it. Surely this could be outside the loop?
       {
-        if((n==0)&&(wallShow[wall+1]==0))  //left wall, only draw if the middle wall is missing
+        // You're doing for n = [0..2] and then testing if n == 0 or n == 2. Seems a bit odd.
+        if((n == 0) && (wallShow[wall + 1] == 0))  //left wall, only draw if the middle wall is missing
         {
-          ab->fillRect(left+drawSize,top,(leftBack+backSize)-(left+drawSize),drawSize,0);  //blank out area behind wall
-          ab->drawLine(leftBack+backSize,topBack+backSize,left+drawSize,top+drawSize,1);   //lower line
-          ab->drawLine(left+drawSize,top,leftBack+backSize,topBack,1);                     //upper line
-          ab->drawLine(leftBack+backSize,topBack,leftBack+backSize,topBack+backSize,1);    //far line
+          ab->fillRect(left + drawSize, top, (leftBack + backSize) - (left + drawSize), drawSize, 0);  //blank out area behind wall
+          ab->drawLine(leftBack + backSize, topBack + backSize, left + drawSize, top + drawSize, 1);   //lower line
+          ab->drawLine(left + drawSize, top, leftBack + backSize, topBack, 1);                     //upper line
+          ab->drawLine(leftBack + backSize, topBack, leftBack + backSize, topBack + backSize, 1);    //far line
         }
-        if((n==2)&&(wallShow[wall-1]==0)) //right wall, ditto
+        if((n == 2) && (wallShow[wall - 1] == 0)) //right wall, ditto
         {
-          ab->fillRect(leftBack,top,left-leftBack,drawSize,0);
-          ab->drawLine(leftBack,topBack,left,top,1);     //upper
-          ab->drawLine(leftBack,topBack+backSize,left,top+drawSize,1); //lower
-          ab->drawLine(leftBack,topBack,leftBack,topBack+backSize,1);  //side
+          ab->fillRect(leftBack, top, left - leftBack, drawSize, 0);
+          ab->drawLine(leftBack, topBack, left, top, 1);     //upper
+          ab->drawLine(leftBack, topBack + backSize, left,top + drawSize, 1); //lower
+          ab->drawLine(leftBack, topBack, leftBack, topBack + backSize, 1);  //side
         }
-        if((i<3)&&(wallShow[wall+3]==0))  //draw flat wall if not immediately next to the camera, and if there is no wall infront
+        if((i < 3) && (wallShow[wall + 3] == 0))  //draw flat wall if not immediately next to the camera, and if there is no wall infront
         {
-          int wid = drawSize; //width of wall
-          if ((n==2) && (left+wid > 64))  //if the wall goes off the render area, chop the width down
+          int width = drawSize; //width of wall
+          if ((n == 2) && (left + width > 64))  //if the wall goes off the render area, chop the width down
           {
-            wid = 15; //(64-halfSize)-1;  //magic numbering this because the only time it ever happens is on a close right side wall
+            width = 15; //(64-halfSize)-1;  //magic numbering this because the only time it ever happens is on a close right side wall
           }
-          ab->fillRect(left,top,wid,drawSize,0);     //blank out wall area and draw then draw the outline
-          ab->drawRect(left,top,wid+1,drawSize+1,1);
+          ab->fillRect(left, top, width, drawSize, 0);     //blank out wall area and draw then draw the outline
+          ab->drawRect(left, top, width + 1, drawSize + 1, 1);
         }
       }
       else if(itemShow[wall])
       {
-        int8_t itemx = left+drawSize/2;  itemx -= drawSize/4;
-        if(itemx<64)
+        int8_t itemx = left + drawSize / 2;  itemx -= drawSize / 4;
+        if(itemx < 64)
         {
-          int8_t itemy = (top+drawSize)-(drawSize*1/3); itemy -= drawSize/4;
-          ab->drawRect(itemx,itemy,drawSize/2,drawSize/2,1);
+          int8_t itemy = (top + drawSize) - (drawSize * 1 / 3); itemy -= drawSize / 4; // You do realise drawSize * 1 / 3 is the same as drawSize / 3 right? Did you mean drawSize * (1/3)?
+          ab->drawRect(itemx, itemy, drawSize / 2, drawSize / 2, 1);
         }
       }
       wall++;
@@ -151,29 +152,29 @@ void Render::drawView()
       leftBack += backSize;
     }
   }
-  ab->fillRect(64,0,16,64,0);  //hide any leaky drawing
-  ab->drawRect(0,0,64,64,1);
+  ab->fillRect(64, 0, 16, 64, 0);  //hide any leaky drawing
+  ab->drawRect(0, 0, 64, 64, 1);
 }
 
 void Render::drawMap()
 {
   //draw map grid
   const uint8_t dx = 63;  //x offset, puts on right side of the screen
-  for(int iy=0; iy<8; ++iy) //loops x&y, draws a rectangle for every wall
+  for(int iy = 0; iy < 8; ++iy) //loops x&y, draws a rectangle for every wall
   {
-    for(int ix=0; ix<8; ++ix)
+    for(int ix = 0; ix < 8; ++ix)
     {
-      if (world->get(ix,iy))
+      if (world->get(ix, iy))
       {
-        ab->drawRect(dx+(ix*8),(iy*8),9,9,1);
+        ab->drawRect(dx + (ix * 8), (iy * 8), 9, 9, 1);
       }
     }
   }
   //draws the player as a cross
-  char cx = (player->x)+1;
-  char cy = (player->y)+1;
-  ab->drawLine(dx+(((cx)*8)-6),(cy*8)-6,dx+((cx*8)-2),(cy*8)-2,1);
-  ab->drawLine(dx+(((cx)*8)-6),(cy*8)-2,dx+((cx*8)-2),(cy*8)-6,1);
+  char cx = player->x + 1;
+  char cy = player->y + 1;
+  ab->drawLine(dx + ((cx * 8) - 6), (cy * 8) - 6, dx + ((cx * 8) - 2), (cy * 8) - 2, 1);
+  ab->drawLine(dx + ((cx * 8) - 6), (cy * 8) - 2, dx + ((cx * 8) - 2), (cy * 8) - 6, 1);
 
   //outlines the map
   ab->drawLine(dx+64,0,dx+64,63,1);
