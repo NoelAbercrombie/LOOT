@@ -18,14 +18,14 @@ class Render
   public:
     int8_t renderPos;
 
-    Render(System & ab,World & world,Player & player);
+    Render(System & ab, World & world, Player & player);
 
     void step();
     void draw();
 
-    bool wallCheck(int8_t x,int8_t y);
-    bool itemCheck(int8_t x,int8_t y);
-    void calculateView(int8_t x,int8_t y,Direction dir);
+    bool wallCheck(int8_t x, int8_t y);
+    bool itemCheck(int8_t x, int8_t y);
+    void calculateView(int8_t x, int8_t y, Direction dir);
     void drawView();
     void drawMap();
     void drawStats();
