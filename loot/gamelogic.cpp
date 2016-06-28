@@ -7,7 +7,7 @@
 #include "constants.h"
 #include "direction.h"
 
-Game::Game(System & ab,Render & render,Menu & menu,Player & player,World & world)
+Game::Game(System & ab, Render & render, Menu & menu, Player & player, World & world)
 {
   this->ab = &ab;
   this->menu = &menu;
@@ -37,17 +37,19 @@ void Game::step()
     auto state = ab->getState();
     switch(state)
     {
-      case stateMenu: { menu->init(); }; break;
-      case stateGame: {
-        if (ab->getLastState()==stateMenu)
+      case stateMenu: menu->init(); break;
+      case stateGame:
+      {
+        if (ab->getLastState() == stateMenu)
         {
           player->init();
           world->init();
-        }; break;
+        };
+        break;
       }
-      case stateBattle: {
-
-      };
+      case stateBattle:
+      {
+      }
     }
   }
   ab->stateEndChange();
@@ -58,7 +60,8 @@ void Game::step()
     {
       menu->step();
       menu->draw();
-    };break;
+      break;
+    }
     case stateGame:
     {
       playerStep();
@@ -67,25 +70,26 @@ void Game::step()
 
       if(ab->pushed(BTN_A))
         ab->setState(stateBattle);
-    };break;
+      break;
+    }
     case stateBattle:
     {
       render->drawView();
-      ab->drawRect(24,40,17,16,1);  //enemy placement test
-      ab->setCursor(66,2);
+      ab->drawRect(24, 40, 17, 16, 1);  //enemy placement test
+      ab->setCursor(66, 2);
       ab->print(F("Battle"));
-      ab->setCursor(66,10);
+      ab->setCursor(66, 10);
       ab->print(F("goes here!"));
       if(ab->pushed(BTN_A))
         ab->setState(stateGame);
-    };break;
-
+      break;
+    }
   };
 }
 
 void Game::playerStep() //Here just for testing reasons, will be relocated soon
 {
-  Direction dir,lastDir;
+  Direction dir, lastDir;
   dir = player->dir;
   lastDir = player->dir;
 
