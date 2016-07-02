@@ -81,10 +81,9 @@ void Render::calculateView(const int8_t x, const int8_t y, const Direction dir)
 
 void Render::step(void)
 {
-  if(player->moved) //only recalculate on movement
+  if(player->hasMoved()) //only recalculate on movement
    {
-     calculateView(player->x, player->y, player->dir);
-     player->moved = false;
+     calculateView(player->x, player->y, player->getDirection());
    }
 }
 
@@ -163,7 +162,7 @@ void Render::drawView(void)
   ab->drawRect(0, 0, 64, 64, 1);
 
   ab->setCursor(4, 4);
-  switch(player->dir)
+  switch(getDirection())
   {
     case Direction::East: { ab->print(F("EAST")); break; }
     case Direction::South: { ab->print(F("SOUTH")); break; }
@@ -171,7 +170,7 @@ void Render::drawView(void)
     case Direction::North: {ab->print(F("NORTH")); break; }
     default: { ab->print(F("Wat")); break; }
   }
-  //printf(" Direction: %u", player->dir);
+  //printf(" Direction: %u", getDirection());
 }
 
 void Render::drawMap(void)
@@ -191,7 +190,7 @@ void Render::drawMap(void)
     uint8_t x2 = x1, y2 = y1;
     uint8_t x3 = x1, y3 = y1;
     
-    switch(player->dir)
+    switch(getDirection())
     {
       case Direction::East:
       {
