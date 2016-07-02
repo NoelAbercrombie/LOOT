@@ -162,7 +162,7 @@ void Render::drawView(void)
   ab->drawRect(0, 0, 64, 64, 1);
 
   ab->setCursor(4, 4);
-  switch(getDirection())
+  switch(player->getDirection())
   {
     case Direction::East: { ab->print(F("EAST")); break; }
     case Direction::South: { ab->print(F("SOUTH")); break; }
