@@ -10,11 +10,11 @@ class Player
   private:
     System * ab;
     World * world;
+    bool moved;
+    Direction dir;
     
   public:
-    bool moved;
     int8_t x, y; //needs to be signed so checking negative positions doesn't bug out
-    Direction dir;
     uint8_t hp, sp;
     char name[8];
 
@@ -22,8 +22,14 @@ class Player
     Player(System & ab, World & world);
 
     void init(void);
+    
+    Direction getDirection(void) const;
     void changeDirection(const Direction direction);
+    
+    bool hasMoved(void) const;
+    void resetMoved(void);
     void move(const int8_t distance);
+    
     void jump(const uint8_t x, const uint8_t y);
     void step(void);
 };
