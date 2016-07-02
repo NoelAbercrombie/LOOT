@@ -190,7 +190,7 @@ void Render::drawMap(void)
     uint8_t x2 = x1, y2 = y1;
     uint8_t x3 = x1, y3 = y1;
     
-    switch(getDirection())
+    switch(player->getDirection())
     {
       case Direction::East:
       {
