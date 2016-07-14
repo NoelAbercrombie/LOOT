@@ -22,7 +22,7 @@ class Render
     void draw(void);
 
     bool wallCheck(const int8_t x, const int8_t y);
-    bool itemCheck(const int8_t x, const int8_t y);
+    uint8_t itemCheck(const int8_t x, const int8_t y);
     void calculateView(const int8_t x, const int8_t y, const Direction dir);
     void drawView(void);
     void drawMap(void);

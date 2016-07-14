@@ -71,7 +71,7 @@ void Menu::draw(void)
     {
       //logo
       if (logoAnim > 0)
-        ab->drawSprite(8, 5 - (64 - logoAnim), imgTitle, 1);
+        ab->drawSpriteCentered(64, 32 - (64 - logoAnim), imgTitle, 1);
       //menu text
       ab->setCursor(16, logoAnim + 8);
       ab->print(F("Play"));

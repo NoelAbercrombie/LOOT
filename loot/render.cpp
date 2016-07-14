@@ -16,7 +16,7 @@ inline bool Render::wallCheck(const int8_t x, const int8_t y)
 {
   return (world->get(x, y) == 1);
 }
-inline bool Render::itemCheck(const int8_t x, const int8_t y)
+inline uint8_t Render::itemCheck(const int8_t x, const int8_t y)
 {
   return (world->getItem(x, y));
 }
@@ -61,7 +61,10 @@ void Render::calculateView(const int8_t x, const int8_t y, const Direction dir)
     }
 
     wallShow[i] = wallCheck(x + xs, y + ys);
-    itemShow[i] = itemCheck(x + xs, y + ys);
+    itemShow[i] = false;  
+
+    if(wallShow[i] == 0)
+      itemShow[i] = itemCheck(x + xs, y + ys);
   }
 
 
@@ -144,21 +147,16 @@ void Render::drawView(void)
         {
           int8_t itemy = (top + drawSize) - (drawSize/2);
           //const uint8_t * image[];
-          if (i==3)
+          const uint8_t * image;
+          const uint8_t * mask;
+          switch(i)
           {
-            ab->drawSpriteMasked(itemx,itemy,imgChest3,imgChest3Mask);
-          }
-          else
-          {
-            const uint8_t * image;
-            switch(i)
-            {
-              case 0: image = imgChest0;  break;
-              case 1: image = imgChest1;  break;
-              case 2: image = imgChest2;  break;
-            };
-            ab->drawSprite(itemx,itemy,image,1);
-          }
+            case 0: image = imgChest0;  mask = imgBlank;  break;
+            case 1: image = imgChest1;  mask = imgBlank;  break;
+            case 2: image = imgChest2;  mask = imgChest2Mask; break;
+            case 3: image = imgChest3;  mask = imgChest3Mask; break;
+          };
+          ab->drawSpriteMasked(itemx,itemy,image,mask);
           //ab->drawRect(itemx, itemy, drawSize / 2, drawSize / 2, 1);
         }
       }

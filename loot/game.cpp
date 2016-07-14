@@ -64,13 +64,11 @@ void Game::step(void)
     }
     case stateGame:
     {
-      player->step();
+      player->step(ab->isPushed(Button::Up), ab->isPushed(Button::Down), ab->isPushed(Button::Left), ab->isPushed(Button::Right), ab->isPushed(Button::A));
+      world->step();
       render->step();
       render->draw();
       player->resetMoved();
-
-      if(ab->isPushed(Button::A))
-        ab->setState(stateBattle);
       break;
     }
     case stateBattle:

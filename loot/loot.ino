@@ -11,14 +11,16 @@
 
 System ab = System();
 World world = World();
-Player player = Player(ab, world);
 Menu menu = Menu(ab);
+Player player = Player(ab, world);
 Render render = Render(ab, world, player);
 Game game = Game(ab, render, menu, player, world); //controls everything!
 
 void setup(void)
 {
 	ab.begin();
+	Serial.begin(9600);
+	Serial.println(F("Start!"));
 	ab.fillScreen(0);
   	ab.drawSpriteCentered(64, 32, imgTitle, 1);
 	ab.display();

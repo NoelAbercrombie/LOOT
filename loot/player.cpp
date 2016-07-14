@@ -32,7 +32,7 @@ void Player::changeDirection(const Direction direction)
 
 bool Player::hasMoved(void) const
 {
- return moved; 
+ return moved;
 }
 
 void Player::resetMoved(void)
@@ -51,6 +51,7 @@ void Player::move(const int8_t distance)
     case Direction::North: ny = -1; break;
   }
   this->jump(this->x + (nx * distance), this->y + (ny * distance));
+  this->battleSteps += abs(distance);
 }
 
 void Player::jump(const uint8_t x, const uint8_t y)
@@ -63,14 +64,14 @@ void Player::jump(const uint8_t x, const uint8_t y)
   }
 }
 
-void Player::step()
+void Player::step(const bool up, const bool down, const bool left, const bool right, const bool a)
 {
   Direction lastDir = dir;
 
-  if(ab->isPushed(Button::Left))
+  if(left)
     dir = rotateLeft(dir);
 
-  if(ab->isPushed(Button::Right))
+  if(right)
     dir = rotateRight(dir);
 
   if(dir != lastDir)
@@ -78,9 +79,27 @@ void Player::step()
     moved = true;
   }
 
-  if(ab->isPushed(Button::Up)) //move 1 step in the looking direction
+  if(up) //move 1 step in the looking direction
     move(1);
 
-  if(ab->isPushed(Button::Down))
+  if(down)
     move(-1);
+
+  if(world->getItem(x,y))
+  {
+    Serial.println(F("Item!"));
+    //ab->fillScreen(0);
+    //world->setItem(world->getItemID(x,y),x,y,0);
+  }
+
+  if(moved)
+  {
+    Serial.println(battleSteps);
+    if (!(world->getItem(x,y)) && (random(battleSteps) > world->getBattleChance()) )
+    { 
+      Serial.println(F("Battle!"));
+      battleSteps = 0;
+    }
+  }
+
 }
