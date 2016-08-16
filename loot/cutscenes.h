@@ -20,7 +20,8 @@ class Cutscenes
     Cutscenes(System & ab);
 
     void start(const CutsceneType scene, const GameState stateNext);
-    void play(const CutsceneType scene);
+    void end(void);
+
     void step(void);
     void draw(void);
 };

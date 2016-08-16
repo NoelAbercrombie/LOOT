@@ -17,14 +17,25 @@ void Cutscenes::start(const CutsceneType scene, const GameState stateNext)
 	this->stateLast = ab->getState();
 	ab->setState(GameState::Cutscene);
 	complete = false;
-	ready = false;
 	time = 0;
 }
 
+/*
 void Cutscenes::play(const CutsceneType scene)
 {
 	//interrupts current state to play a cutscene.
 	start(scene, ab->getState());
+}
+*/
+
+void Cutscenes::end()
+{
+	complete = true;
+	if (stateNext != GameState::Null)
+	{
+		ab->setState(stateLast);	//I'm sorry.
+		ab->setState(stateNext);
+	}
 }
 
 void Cutscenes::step()
@@ -33,20 +44,14 @@ void Cutscenes::step()
 	{
 		case CutsceneType::None:
 		{
-			complete = true;
-			if (stateNext != GameState::Null)
-			{
-				ab->setState(stateLast);	//I'm sorry.
-				ab->setState(stateNext);
-			}
+			end();
 			break;
 		}
 		case CutsceneType::Scene1:
 		{
-			ready = true;
 			if(ab->isPushed(Button::A))
 			{
-				scene = CutsceneType::None;
+				end();
 			}
 			break;
 		}
@@ -57,14 +62,17 @@ void Cutscenes::draw()
 {
 	switch(scene)
 	{
+		/*
 		case CutsceneType::None:
 		{
 			ab->fillScreen(1);
 			break;
 		}
+		*/
 		case CutsceneType::Scene1:
 		{
-			ab->drawSprite(16,8,imgStory1,1);
+			time++;
+			ab->drawSprite(32,(int8_t)(time % 96)-32,imgStory1,1);
 			break;
 		}
 	}
