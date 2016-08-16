@@ -1,11 +1,6 @@
 #pragma once
 #include <stdint.h>
-
-#if defined(ARDUBOY_2_LIB) 
 #include "ArduboyCore.h"
-#else
-#include <core/core.h>
-#endif
 
 enum class Button : uint8_t
 {

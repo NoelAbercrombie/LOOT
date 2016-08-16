@@ -1,16 +1,6 @@
-
-//remove next line if you're using the Arduboy library
-#define ARDUBOY_2_LIB
-
 #include <stdint.h>
-#if defined(ARDUBOY_2_LIB) 
 #include <Arduboy2.h>
-#else
-#include <Arduboy.h>
-#endif
-
 #include "system.h"
-#include "button.h"
 #include "game.h"
 #include "graphics.h"
 #include "render.h"
