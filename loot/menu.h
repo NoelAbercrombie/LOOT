@@ -17,6 +17,8 @@ class Menu
   public:
     Menu(System & ab);
 
+    inline void menuGoto(const MenuPage page, const int8_t select);
+
     void init(void);
     void step(void);
     void draw(void);
