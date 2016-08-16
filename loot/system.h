@@ -4,7 +4,11 @@
 #include "gamestate.h"
 #include "button.h"
 
+#if defined(ARDUBOY_2_LIB) 
 class System : public Arduboy2
+#else
+class System : public Arduboy
+#endif
 {
 	private:
 		uint8_t nowInput;
@@ -21,7 +25,11 @@ class System : public Arduboy2
 	public:
 		// Explicitly calling parent's default constructor for the sake of clarity.
 		// Arduboy's constructor would be called even if the explicit call were removed.
+		#if defined(ARDUBOY_2_LIB) 
 		System(void) : Arduboy2()
+		#else
+		System(void) : Arduboy()
+		#endif
 		{
 			this->lastState = GameState::Null;
 			this->state = GameState::Menu;
