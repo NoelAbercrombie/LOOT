@@ -51,7 +51,7 @@ void Menu::step(void)
             {
               case 0: { menuGoto(MenuPage::Mode,0); break; }
               case 1: { menuGoto(MenuPage::Options,0);    break; }
-              case 2: { menuGoto(MenuPage::About,2); break; } // This basically equates to if(select == 2) select = 2;
+              case 2: { cutscenes->play(CutsceneType::Credits); break; } // This basically equates to if(select == 2) select = 2;
             }
             break;
           }
@@ -132,12 +132,6 @@ void Menu::draw(void)
     {
       ab->setCursor(0, 0);
       ab->print(F("Nothing to see here!"));
-      break;
-    }
-    case MenuPage::About:
-    {
-      ab->setCursor(0, 0);
-      ab->print(F("Test string!"));
       break;
     }
     // And the best bit, it's exactly equivalent to what you were doing before,
