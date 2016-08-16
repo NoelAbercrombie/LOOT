@@ -90,7 +90,7 @@ class System : public Arduboy
 		{
 			return this->lastState;
 		}
-  
+		
 		void revertState(void) 
 		{
 			this->state = this->lastState;

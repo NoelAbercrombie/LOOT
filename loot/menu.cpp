@@ -3,12 +3,22 @@
 #include "graphics.h"
 #include "system.h"
 #include "button.h"
+#include "cutscenes.h"
+#include "cutscenetype.h"
 #include "gamestate.h"
 
-Menu::Menu(System & ab)
+Menu::Menu(System & ab, Cutscenes & cutscenes)
 {
   this->ab = &ab;
+  this->cutscenes = &cutscenes;
 }
+
+inline void Menu::menuGoto(const MenuPage page, const int8_t select)
+{
+  this->page = page;
+  this->select = select;
+}
+
 
 void Menu::init(void)
 {
@@ -39,21 +49,30 @@ void Menu::step(void)
           {
             switch(select)
             {
-            case 0: { ab->setState(GameState::Gameplay); break; }
-            case 1: { page = MenuPage::Options; break; }
-            case 2: { page = MenuPage::About; select = 2; break; } // This basically equates to if(select == 2) select = 2;
+              case 0: { menuGoto(MenuPage::Mode,0); break; }
+              case 1: { menuGoto(MenuPage::Options,0);    break; }
+              case 2: { menuGoto(MenuPage::About,2); break; } // This basically equates to if(select == 2) select = 2;
+            }
+            break;
+          }
+          case MenuPage::Mode:
+          {
+            switch(select)
+            {
+              case 0: { cutscenes->start(CutsceneType::Scene1, GameState::Gameplay);    break; }
+              case 1: { ab->setState(GameState::Gameplay); break; }
+              case 2: { menuGoto(MenuPage::Main,0); break; } // This basically equates to if(select == 2) select = 2;
             }
             break;
           }
           case MenuPage::Options:
           {
-            page = MenuPage::Main;
-            select = 1;
+            menuGoto(MenuPage::Main,1);
             break;
           }
           case MenuPage::About:
           {
-            page = MenuPage::Main;
+            menuGoto(MenuPage::Main,2);
             break;
           }
         }
@@ -74,28 +93,40 @@ void Menu::step(void)
 
 void Menu::draw(void)
 {
+  //logo
+  if (logoAnim > 0)
+    ab->drawSpriteCentred(System::ScreenCentreX, System::ScreenCentreY - (System::ScreenHeight - logoAnim), imgTitle, 1);
   switch(page)
   {
     case MenuPage::Main:
     {
-      //logo
-      if (logoAnim > 0)
-        ab->drawSpriteCentred(System::ScreenCentreX, System::ScreenCentreY - (System::ScreenHeight - logoAnim), imgTitle, 1);
       //menu text
-      ab->setCursor(16, logoAnim + 8);
+      ab->setCursor(8, logoAnim + 8);
       ab->print(F("Play"));
-      ab->setCursor(16, logoAnim + 16);
+      ab->setCursor(8, logoAnim + 16);
       ab->print(F("Config"));
-      ab->setCursor(16, logoAnim + 24);
+      ab->setCursor(8, logoAnim + 24);
       ab->print(F("About"));
       //select cursor
-      ab->setCursor(8, logoAnim + 8 + (8 * select));
+      ab->setCursor(0, logoAnim + 8 + (8 * select));
       ab->print(F(">"));
       break;
     }
-    // Why leave comments explaining what the numbers are when you can do this:
+    case MenuPage::Mode:
+    {
+      ab->setCursor(8, 8);
+      ab->print(F("Story"));
+      ab->setCursor(8, 16);
+      ab->print(F("Challenge"));
+      ab->setCursor(8, 24);
+      ab->print(F("Back"));
+      ab->setCursor(0, 8 + (8 * select));
+      ab->print(F(">"));
+      break;
+    }
     case MenuPage::Slots:
     {
+      break;
     }
     case MenuPage::Options:
     {
