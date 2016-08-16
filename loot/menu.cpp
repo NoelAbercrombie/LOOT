@@ -3,11 +3,14 @@
 #include "graphics.h"
 #include "system.h"
 #include "button.h"
+#include "cutscenes.h"
+#include "cutscenetype.h"
 #include "gamestate.h"
 
-Menu::Menu(System & ab)
+Menu::Menu(System & ab, Cutscenes & cutscenes)
 {
   this->ab = &ab;
+  this->cutscenes = &cutscenes;
 }
 
 inline void Menu::menuGoto(const MenuPage page, const int8_t select)
@@ -57,8 +60,8 @@ void Menu::step(void)
             switch(select)
             {
               case 0: { ab->setState(GameState::Gameplay); break; }
-              //case 1: { menuGoto(MenuPage::Options,0);    break; }
-              case 2: { menuGoto(MenuPage::About,2); break; } // This basically equates to if(select == 2) select = 2;
+              case 1: { cutscenes->start(CutsceneType::Scene1, GameState::Gameplay);    break; }
+              case 2: { menuGoto(MenuPage::Main,0); break; } // This basically equates to if(select == 2) select = 2;
             }
             break;
           }

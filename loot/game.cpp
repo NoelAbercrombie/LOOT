@@ -7,15 +7,17 @@
 #include "world.h"
 #include "direction.h"
 #include "button.h"
+#include "cutscenes.h"
 #include "gamestate.h"
 
-Game::Game(System & ab, Render & render, Menu & menu, Player & player, World & world, Battle & battle)
+Game::Game(System & ab, Render & render, Menu & menu, Player & player, World & world, Cutscenes & cutscenes, Battle & battle)
 {
   this->ab = &ab;
   this->menu = &menu;
   this->render = &render;
   this->player = &player;
   this->world = &world;
+  this->cutscenes = &cutscenes;
   this->battle = &battle;
 }
 
@@ -63,6 +65,12 @@ void Game::step(void)
   			battle->step();
   			render->drawView();
   			battle->draw();
+        break;
   		}
+      case GameState::Cutscene:
+      {
+        cutscenes->step();
+        cutscenes->draw();
+      }
     }
 }
