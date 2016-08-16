@@ -8,14 +8,16 @@
 #include "player.h"
 #include "menu.h"
 #include "battle.h"
+#include "cutscenes.h"
 
 System ab = System();
+Cutscenes cutscenes = Cutscenes(ab);
 World world = World();
 Battle battle = Battle(ab);
 Player player = Player(ab, world);
-Menu menu = Menu(ab);
+Menu menu = Menu(ab, cutscenes);
 Render render = Render(ab, world, player);
-Game game = Game(ab, render, menu, player, world, battle); //controls everything!
+Game game = Game(ab, render, menu, player, world, cutscenes, battle); //controls everything!
 
 void setup(void)
 {
