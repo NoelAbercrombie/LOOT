@@ -59,8 +59,8 @@ void Menu::step(void)
           {
             switch(select)
             {
-              case 0: { ab->setState(GameState::Gameplay); break; }
-              case 1: { cutscenes->start(CutsceneType::Scene1, GameState::Gameplay);    break; }
+              case 0: { cutscenes->start(CutsceneType::Scene1, GameState::Gameplay);    break; }
+              case 1: { ab->setState(GameState::Gameplay); break; }
               case 2: { menuGoto(MenuPage::Main,0); break; } // This basically equates to if(select == 2) select = 2;
             }
             break;
