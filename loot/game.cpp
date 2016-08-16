@@ -62,6 +62,11 @@ void Game::step(void)
   		}
   		case GameState::Battle:
   		{
+        if (ab->getLastState() == GameState::Gameplay) //cheaper than checking if last frame was not battle
+        {
+          battle->start();
+          ab->stateEndChange();
+        }
   			battle->step();
   			render->drawView();
   			battle->draw();
