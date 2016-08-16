@@ -1,5 +1,5 @@
 #include <stdint.h>
-#include <Arduboy.h>
+#include <Arduboy2.h>
 #include "system.h"
 #include "game.h"
 #include "graphics.h"
