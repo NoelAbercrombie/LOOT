@@ -52,13 +52,15 @@ void Battle::draw(void)
 {
 	ab->drawSpriteCentred(System::ScreenCentreX / 2, enemyAnim, imgSkeleton1, 1);
 
-
 	//draw hp bars
 	drawBar(1, 1, System::ScreenCentreX-2, 100);
 	drawBar(System::ScreenCentreX+1, 1, System::ScreenCentreX-2, 100);
 
-
-	//ab->setCursor(System::ScreenCentreX, 0);
-	//ab->print(F("BATTLE!"));
+	ab->setCursor(System::ScreenCentreX+2, 16);
+	ab->print(F(">Fight"));
+	ab->setCursor(System::ScreenCentreX+2, 24);
+	ab->print(F(" Item"));
+	ab->setCursor(System::ScreenCentreX+2, 32);
+	ab->print(F(" Run"));
 }
 
