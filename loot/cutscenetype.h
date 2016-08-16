@@ -7,6 +7,6 @@ enum class CutsceneType : uint8_t
 	Scene1,
 	Scene2,
 	SceneEnd,
-	SceneCredits,
+	Credits,
 };
 
