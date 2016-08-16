@@ -9,4 +9,5 @@ enum class GameState : uint8_t
 	NameEntry,
 	Gameplay,
 	Battle,
+	Story1,
 };
