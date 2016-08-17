@@ -55,9 +55,9 @@ void Game::step(void)
   				ab->stateEndChange();
   			}        
         player->step();    
-        player->resetMoved();
   			render->step();
   			render->draw();
+        player->resetMoved();
   			break;
   		}
   		case GameState::Battle:

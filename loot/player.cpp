@@ -109,7 +109,9 @@ void Player::step()
 
   if (world->hasItem(x,y) && ab->isPushed(Button::A))
   {
-    world->takeItem(world->getItemID(x,y));
+    uint8_t item = world->getItemID(x,y);
+    world->takeItem(item);
+    Serial.println(item);
     cutscenes->play(CutsceneType::OpenChest);
     moved = true; //makes screen redraw, currently flickers for 1 frame.
   }
