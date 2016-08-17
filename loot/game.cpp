@@ -53,12 +53,11 @@ void Game::step(void)
   				player->init();
   				world->init();
   				ab->stateEndChange();
-  			}
+  			}        
+        player->step();    
+        player->resetMoved();
   			render->step();
   			render->draw();
-        //Putting the player code at the end adds 1 frame of latency to player movement, but reduces flicker between input & certain responses.
-        player->resetMoved();
-        player->step();     
   			break;
   		}
   		case GameState::Battle:
