@@ -38,4 +38,7 @@ class World
     // This should be 'hasItem',
     // 'getItem' implies you can actually retrieve a reference to said item
     bool hasItem(const int8_t x, const int8_t y) const;
+
+    void takeItem(const uint8_t item);
+    void removeItem(const uint8_t item);
 };

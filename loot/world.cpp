@@ -151,3 +151,14 @@ void World::setItem(const uint8_t item,const int8_t x, const int8_t y, const Ite
 {
   chests[item] = Chest(x,y,type);
 }
+
+void World::takeItem(const uint8_t item)
+{
+  //add inventory code here later
+  removeItem(item);
+}
+
+void World::removeItem(const uint8_t item)
+{
+  chests.removeAt(item);
+}
