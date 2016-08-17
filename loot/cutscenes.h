@@ -17,6 +17,9 @@ class Cutscenes
     uint8_t time;
 
   public:
+    bool drawView;
+
+  public:
     Cutscenes(System & ab);
 
     void start(const CutsceneType scene, const GameState stateNext);
@@ -25,4 +28,5 @@ class Cutscenes
 
     void step(void);
     void draw(void);
+
 };

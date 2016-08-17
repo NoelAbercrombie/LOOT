@@ -54,10 +54,11 @@ void Game::step(void)
   				world->init();
   				ab->stateEndChange();
   			}
-  			player->step();
   			render->step();
   			render->draw();
-  			player->resetMoved();
+        //Putting the player code at the end adds 1 frame of latency to player movement, but reduces flicker between input & certain responses.
+        player->resetMoved();
+        player->step();     
   			break;
   		}
   		case GameState::Battle:
@@ -75,7 +76,12 @@ void Game::step(void)
       case GameState::Cutscene:
       {
         cutscenes->step();
+        if(cutscenes->drawView)
+        {
+          render->draw();
+        }
         cutscenes->draw();
+        break;
       }
     }
 }

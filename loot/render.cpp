@@ -87,14 +87,14 @@ void Render::calculateView(const int8_t x, const int8_t y, const Direction dir)
 
 void Render::step(void)
 {
-  if(player->hasMoved()) //only recalculate on movement
-   {
-     calculateView(player->x, player->y, player->getDirection());
-   }
 }
 
 void Render::draw(void)
 {
+  if(player->hasMoved()) //only recalculate on movement
+   {
+     calculateView(player->x, player->y, player->getDirection());
+   }
   drawView();
   drawMap();
 }
@@ -169,7 +169,7 @@ void Render::drawView(void)
   ab->fillRect(System::ScreenCentreX, 0, 16, System::ScreenHeight, 0);  //hide any leaky drawing
   ab->drawRect(0, 0, System::ScreenWidth / 2, System::ScreenHeight, 1);
 
-  if(ab->getState() == GameState::Gameplay)
+  if(ab->getState() != GameState::Battle)
   {
     #if defined(CHAR_COMPASS)
     char c = '\0';

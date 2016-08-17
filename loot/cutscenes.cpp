@@ -2,6 +2,7 @@
 #include "cutscenetype.h"
 #include "gamestate.h"
 #include "system.h"
+#include "render.h"
 #include "button.h"
 #include "graphics.h"
 
@@ -18,6 +19,7 @@ void Cutscenes::start(const CutsceneType scene, const GameState stateNext)
 	ab->setState(GameState::Cutscene);
 	complete = false;
 	time = 0;
+	drawView = false;
 }
 
 void Cutscenes::play(const CutsceneType scene)
@@ -62,6 +64,13 @@ void Cutscenes::step()
 			}
 			break;
 		}
+
+		case CutsceneType::OpenChest:
+		{
+			time++;
+			drawView = true;	//draw background & UI
+			if (time > 120) end();
+		}
 	}
 }
 
@@ -87,6 +96,14 @@ void Cutscenes::draw()
 			if(time<128)	time++;
 		    ab->setCursor(0,64-(time/2));
 		    ab->print(F("LOOT! - Epic Dungeon\n\nProgramming :\n @bakagamedev\n Pharap\nArt/Design : \n Migz (Gamerguy)"));
+		    break;
+		}
+		case CutsceneType::OpenChest:
+		{
+			int8_t y=43;
+			//replace with animation of lid opening and stuff flying out
+			y = max(y-time,32);
+			ab->drawSpriteMaskedCentered(31,y,imgChest3,imgChest3Mask);
 		}
 	}
 }
