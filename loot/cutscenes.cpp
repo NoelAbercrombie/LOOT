@@ -69,7 +69,7 @@ void Cutscenes::step()
 		{
 			time++;
 			drawView = true;	//draw background & UI
-			if (time > 120) end();
+			if (time > 30) end();
 		}
 	}
 }
