@@ -12,8 +12,8 @@ private:
 	System * ab;
 	Player * playerData;
 
-	Fighter player;
-	Fighter enemy;
+	//Fighter player;
+	//Fighter enemy;
 	bool ready;
 
 	//menu
