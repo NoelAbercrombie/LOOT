@@ -47,7 +47,8 @@ public:
 		DEBUG_ASSERT(index < Capacity);
 		DEBUG_ASSERT(index < this->next);
 
-		for (uint8_t i = index; i < this->next - 1; ++i)
+		--this->next;	
+		for(uint8_t i = index; i < this->next; ++i)
 			this->items[i] = this->items[i + 1];
 	}
 
