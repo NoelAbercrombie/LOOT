@@ -5,9 +5,10 @@
 #include "gamestate.h"
 #include "system.h"
 
-Battle::Battle(System & ab)
+Battle::Battle(System & ab, Player & playerData);
 {
 	this->ab = &ab;
+	this->playerData = &playerData;
 }
 
 void Battle::start(void)
@@ -15,7 +16,8 @@ void Battle::start(void)
 	enemyAnim = -32;
 	enemyStop = System::ScreenCentreY + 8;
 
-	//enemy.setHP(60);
+	enemy.load(EnemyType Skeleton);
+	player.Player(Player playerData);
 }
 
 

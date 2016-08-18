@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include "system.h"
 #include "enemytype.h"
-//#include "fighter.h"
+#include "player.h"
 
 class Fighter;
 
@@ -10,8 +10,10 @@ class Battle
 {
 private:
 	System * ab;
-	//Fighter player;
-	//Fighter enemy;
+	Player * playerData;
+
+	Fighter player;
+	Fighter enemy;
 	bool ready;
 
 	//menu
@@ -23,7 +25,7 @@ private:
 	int8_t enemyStop;
 
 public:
-	Battle(System & ab);
+	Battle(System & ab, Player & playerData);
 
 	void start(void);
 	void step(void);

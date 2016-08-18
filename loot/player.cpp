@@ -15,6 +15,8 @@ void Player::init(void)
   moved = true;
   x = 1;
   y = 1;
+  hpMax = 10;
+  spMax = 10;
   hp = 10;
   sp = 10;
 }

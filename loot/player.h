@@ -16,7 +16,7 @@ class Player
   public:
     int8_t x, y; //needs to be signed so checking negative positions doesn't bug out
     uint8_t battleSteps;
-    uint8_t hp, sp;
+    uint8_t hp, sp, hpMax, spMax;
     char name[8];
 
   public:
