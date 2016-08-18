@@ -109,7 +109,7 @@ ItemType World::getItemType(const int8_t x, const int8_t y) const
     // As if by magic these former array indexers are now indexing a list.
     // This is one of those cases where if you wield the chainsaw correctly
     // you'll cut the tree and not your fingers.
-    if ((chests[i].getX() == x) && (chests[i].getY() == y)) //if chest is on position, return contents
+    if (chests[i].onPosition(x,y))
       return (chests[i].getType());
   }
   return ItemType::None;
@@ -123,7 +123,7 @@ bool World::hasItem(const int8_t x, const int8_t y) const
 {
   for(uint8_t i; i<16; ++i) //loop every chest
   {
-    if ((chests[i].getX() == x) && (chests[i].getY() == y))
+    if (chests[i].onPosition(x,y))
       return true;
   }
   return false;
@@ -137,7 +137,7 @@ uint8_t World::getItemID(const int8_t x, const int8_t y) const
   //Will act weirdly if no chest on tile; 0 is a valid id
   for(uint8_t i; i<16; ++i) //loop every chest
   {
-    if ((chests[i].getX() == x) && (chests[i].getY() == y))
+    if (chests[i].onPosition(x,y))
       return i;
   }
   return 255;
@@ -160,5 +160,5 @@ void World::takeItem(const uint8_t item)
 
 void World::removeItem(const uint8_t item)
 {
-  chests.remove(item);
+  chests.removeAt(item);
 }

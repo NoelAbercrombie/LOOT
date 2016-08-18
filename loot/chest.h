@@ -48,6 +48,11 @@ public:
     {
       this->y = y;
     }
+
+    bool onPosition(int8_t xx, int8_t yy) const
+    {
+      return ((x == xx) && (y == yy));
+    }
 };
 
 using ChestList = List<Chest, 16>;
