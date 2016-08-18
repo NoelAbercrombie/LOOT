@@ -30,6 +30,7 @@ void World::init(void)
 
   // Creates a chest and adds it straight to the list
   chests.add(Chest(0, 1, ItemType::TestItem));
+  chests.add(Chest(4, 1, ItemType::TestItem2));
   chests.add(Chest(1, 6, ItemType::TestItem2));
   Serial.print(F("Chest num : "));
   Serial.println(chests.getCount());

@@ -91,10 +91,11 @@ void Player::step()
 
   if(moved)
   {
+    Serial.print("Step : ");
     Serial.println(battleSteps);
     if (world->hasItem(x,y))
     {
-      Serial.print(F("Item! Type : "));
+      Serial.print(F("Item : Type : "));
       Serial.print(static_cast<uint8_t>(world->getItemType(x,y)));
       Serial.print(F(" ID : "));
       Serial.println(world->getItemID(x,y));

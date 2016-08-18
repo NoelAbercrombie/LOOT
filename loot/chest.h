@@ -49,9 +49,9 @@ public:
       this->y = y;
     }
 
-    bool onPosition(int8_t xx, int8_t yy) const
+    bool onPosition(const int8_t x, const int8_t y) const
     {
-      return ((x == xx) && (y == yy));
+      return (this->x == x && this->y == y);
     }
 };
 
