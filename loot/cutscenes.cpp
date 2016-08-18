@@ -20,13 +20,11 @@ void Cutscenes::start(const CutsceneType scene, const GameState stateNext)
 	time = 0;
 }
 
-/*
 void Cutscenes::play(const CutsceneType scene)
 {
 	//interrupts current state to play a cutscene.
 	start(scene, ab->getState());
 }
-*/
 
 void Cutscenes::end()
 {
@@ -55,6 +53,15 @@ void Cutscenes::step()
 			}
 			break;
 		}
+
+		case CutsceneType::Credits:
+		{
+			if(ab->isPushed(Button::A))
+			{
+				end();
+			}
+			break;
+		}
 	}
 }
 
@@ -74,6 +81,12 @@ void Cutscenes::draw()
 			time++;
 			ab->drawSprite(32,(int8_t)(time % 96)-32,imgStory1,1);
 			break;
+		}
+		case CutsceneType::Credits:
+		{
+			if(time<128)	time++;
+		    ab->setCursor(0,64-(time/2));
+		    ab->print(F("LOOT! - Epic Dungeon\n\nProgramming :\n @bakagamedev\n Pharap\nArt/Design : \n Migz (Gamerguy)"));
 		}
 	}
 }
