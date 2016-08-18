@@ -121,7 +121,7 @@ ItemType World::getItemType(const int8_t x, const int8_t y) const
 // and why C++17 is introducing a std::optional type.
 bool World::hasItem(const int8_t x, const int8_t y) const
 {
-  for(uint8_t i; i<16; ++i) //loop every chest
+  for(uint8_t i=0 ; i<16; ++i) //loop every chest
   {
     if (chests[i].onPosition(x,y))
       return true;
@@ -135,7 +135,7 @@ bool World::hasItem(const int8_t x, const int8_t y) const
 uint8_t World::getItemID(const int8_t x, const int8_t y) const
 {
   //Will act weirdly if no chest on tile; 0 is a valid id
-  for(uint8_t i; i<16; ++i) //loop every chest
+  for(uint8_t i=0; i<16; ++i) //loop every chest
   {
     if (chests[i].onPosition(x,y))
       return i;
