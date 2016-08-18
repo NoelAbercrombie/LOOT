@@ -19,14 +19,3 @@ void Fighter::player(const Player playerdata)	//Uses players stats
 	hpMax = playerdata.hpMax;
 	hp = playerdata.hp;
 }
-/*
-void Fighter::setHP(const int8_t hp)
-{
-	this->hp = hp;
-}
-
-int8_t Fighter::getHP()
-{
-	return this->hp;
-}
-*/

@@ -17,8 +17,8 @@ private:
 	bool ready;
 
 	//menu
-	uint8_t battleMenu;
-	uint8_t battleSelect; 
+	uint8_t menu;
+	uint8_t select; 
 
 	//animation
 	int8_t enemyAnim;
@@ -31,6 +31,8 @@ public:
 	void step(void);
 	void draw(void);
 
+	void attack(void);
+
 	//drawing helpers
-	void drawBar(const uint8_t x, const uint8_t y, const uint8_t length, const uint8_t percent);
+	void drawBar(const uint8_t x, const uint8_t y, const uint8_t width, const uint8_t value, const uint8_t capacity);
 };
