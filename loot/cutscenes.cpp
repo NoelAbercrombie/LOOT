@@ -69,7 +69,7 @@ void Cutscenes::step()
 		{
 			time++;
 			drawView = true;	//draw background & UI
-			if (time > 30) end();
+			if (time > 80) end();
 		}
 	}
 }
@@ -100,10 +100,32 @@ void Cutscenes::draw()
 		}
 		case CutsceneType::OpenChest:
 		{
-			int8_t y=43;
-			//replace with animation of lid opening and stuff flying out
-			y = max(y-time,32);
-			ab->drawSpriteMaskedCentered(31,y,imgChest3,imgChest3Mask);
+			int8_t xoffset = 31;
+			int8_t yoffset = 43;
+			bool draw = true;
+			const uint8_t * sprite;
+			if (time<32)
+			{
+				sprite = imgChest3;
+				if(time<16)	{	yoffset -= (time^time)/16;	}
+				else	{	int8_t t=(32-time);	yoffset -= (t^t)/16;	}
+			}
+			else
+			{
+				sprite = imgChest3_1;
+				if (time > 40)
+				{
+					sprite = imgChest3_2;
+					xoffset += 2;
+					yoffset -= 2;
+				}
+				if (time > 60)
+				{
+					draw = (time % 2);
+				}
+			}
+			if (draw)
+				ab->drawSpriteMaskedCentered(xoffset,yoffset,sprite,imgChest3Mask);
 		}
 	}
 }
