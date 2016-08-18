@@ -133,7 +133,7 @@ bool World::hasItem(const int8_t x, const int8_t y) const
 // How this is actually legal without a default return value is a mystery
 // I'd recommend assigning 0 as the 'empty' or 'invalid' type if
 // you don't change this to an enum
-uint8_t World::getItemID(const int8_t x, const int8_t y) const
+uint8_t World::getItemIndex(const int8_t x, const int8_t y) const
 {
   //Will act weirdly if no chest on tile; 0 is a valid id
   for(uint8_t i=0; i<16; ++i) //loop every chest
