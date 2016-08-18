@@ -1,5 +1,4 @@
 #include <stdint.h>
-#include <Arduino.h>
 #include "world.h"
 #include "chest.h"
 #include "itemtype.h"
@@ -28,12 +27,13 @@ void World::init(void)
   };
   battleTendency = 4;
 
+  // No need to assign to locals anymore
+  //Chest chest1 = Chest(0,1,1);
+  //Chest chest2 = Chest(1,6,1);
+  
   // Creates a chest and adds it straight to the list
   chests.add(Chest(0, 1, ItemType::TestItem));
-  chests.add(Chest(4, 1, ItemType::TestItem2));
   chests.add(Chest(1, 6, ItemType::TestItem2));
-  Serial.print(F("Chest num : "));
-  Serial.println(chests.getCount());
 }
 
 void World::load(uint8_t *ID) //reads a map from PROGMEM and loads it into memory
@@ -122,7 +122,7 @@ ItemType World::getItemType(const int8_t x, const int8_t y) const
 // and why C++17 is introducing a std::optional type.
 bool World::hasItem(const int8_t x, const int8_t y) const
 {
-  for(uint8_t i=0 ; i<16; ++i) //loop every chest
+  for(uint8_t i; i<16; ++i) //loop every chest
   {
     if (chests[i].onPosition(x,y))
       return true;
@@ -136,12 +136,11 @@ bool World::hasItem(const int8_t x, const int8_t y) const
 uint8_t World::getItemIndex(const int8_t x, const int8_t y) const
 {
   //Will act weirdly if no chest on tile; 0 is a valid id
-  for(uint8_t i=0; i<16; ++i) //loop every chest
+  for(uint8_t i; i<16; ++i) //loop every chest
   {
     if (chests[i].onPosition(x,y))
       return i;
   }
-  return 255;
 }
 
 // If you made Chest public you could just make this function accept an index and a Chest.
@@ -155,7 +154,7 @@ void World::setItem(const uint8_t item,const int8_t x, const int8_t y, const Ite
 
 void World::takeItem(const uint8_t item)
 {
-  //add inventory code here later
+  //do inventory magic here
   removeItem(item);
 }
 

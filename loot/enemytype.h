@@ -3,6 +3,7 @@
 
 enum class EnemyType : uint8_t
 {
-	TestEnemy,
+	None,
+	Skeleton,
 };
 

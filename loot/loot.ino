@@ -13,8 +13,8 @@
 System ab = System();
 Cutscenes cutscenes = Cutscenes(ab);
 World world = World();
-Battle battle = Battle(ab);
 Player player = Player(ab, world, cutscenes);
+Battle battle = Battle(ab, player);
 Menu menu = Menu(ab, cutscenes);
 Render render = Render(ab, world, player);
 Game game = Game(ab, render, menu, player, world, cutscenes, battle); //controls everything!

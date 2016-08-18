@@ -5,9 +5,10 @@
 #include "gamestate.h"
 #include "system.h"
 
-Battle::Battle(System & ab)
+Battle::Battle(System & ab, Player & playerData)
 {
 	this->ab = &ab;
+	this->playerData = &playerData;
 }
 
 void Battle::start(void)
@@ -15,9 +16,14 @@ void Battle::start(void)
 	enemyAnim = -32;
 	enemyStop = System::ScreenCentreY + 8;
 
-	//enemy.setHP(60);
+	//enemy.load(EnemyType Skeleton);
+	//player.Player(Player playerData);
 }
 
+void Battle::attack()
+{
+	//?
+}
 
 void Battle::step(void)
 {
@@ -30,37 +36,81 @@ void Battle::step(void)
 
 	if(ready)	//if the player can press buttons
 	{
-		if(ab->isPressed(Button::A))
+		if(ab->isPushed(Button::A))
 		{
-			ab->setState(GameState::Gameplay);
+			switch(select)
+			{
+				case 0:	
+				{
+					attack();
+					break;
+				}
+				case 1:
+				{
+					break;
+				}
+				case 2:
+				{
+					ab->setState(GameState::Gameplay);
+					break;
+				}
+			}
 		}
+
+		if(ab->isPushed(Button::Up))
+		{
+			if(select > 0) --select;
+		}
+
+		if(ab->isPushed(Button::Down))
+		{
+			if(select < 2) ++select;
+		}	
 	}
 }
 
-void Battle::drawBar(const uint8_t x, const uint8_t y, const uint8_t length, const uint8_t percent)
+void Battle::drawBar(const uint8_t x, const uint8_t y, const uint8_t width, const uint8_t value, const uint8_t capacity)
 {
-	const uint8_t barWidth = length-2;
+	int8_t length = width;
+	if (value > capacity)
+	{
+		length = (value / capacity) * width;
+	}
 
-	ab->fillRect(x, y, barWidth, 6, 0);
-	ab->drawRect(x+1, y+1, length, 4, 1);	
-
-	const uint8_t value = min(length * (percent / 100), length); 
-	ab->drawRect(x+1, y+1, value, 4, 1);	
+	ab->fillRect(x, y, width, 5, 0);
+	ab->drawRect(x, y, width, 5, 1);
+	ab->drawLine(x, y+2, x+length, y+2, 1);
 }
 
 void Battle::draw(void)
 {
 	ab->drawSpriteCentred(System::ScreenCentreX / 2, enemyAnim, imgSkeleton1, 1);
 
-	//draw hp bars
-	drawBar(1, 1, System::ScreenCentreX-2, 100);
-	drawBar(System::ScreenCentreX+1, 1, System::ScreenCentreX-2, 100);
+	if (enemyAnim < enemyStop)
+	{
+		ab->setCursor(System::ScreenCentreX+2, 8);
+		ab->print(F("Skellybones wants"));
+		ab->setCursor(System::ScreenCentreX+2, 16);
+		ab->print(F("to fight!"));
+	}
+	else
+	{
+		//draw hp bars
+		drawBar(2, 2 , System::ScreenCentreX-4, 40, 60);
+		drawBar(System::ScreenCentreX+2, 2, System::ScreenCentreX-4, 100, 110);
 
-	ab->setCursor(System::ScreenCentreX+2, 16);
-	ab->print(F(">Fight"));
-	ab->setCursor(System::ScreenCentreX+2, 24);
-	ab->print(F(" Item"));
-	ab->setCursor(System::ScreenCentreX+2, 32);
-	ab->print(F(" Run"));
+		if (ready)
+		{
+	      ab->setCursor(System::ScreenCentreX+10, 16);
+	      ab->print(F("Fight"));
+	      ab->setCursor(System::ScreenCentreX+10, 24);
+	      ab->print(F("Item"));
+	      ab->setCursor(System::ScreenCentreX+10, 32);
+	      ab->print(F("Run"));
+	      //select cursor
+	      ab->setCursor(System::ScreenCentreX+2, 16 + (8 * select));
+	      ab->print(F(">"));
+		}
+	}
 }
 

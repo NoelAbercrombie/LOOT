@@ -1,18 +1,21 @@
+#include <string.h>
 #include "fighter.h"
 #include "enemytype.h"
+#include "player.h"
 
-Fighter::Fighter(const EnemyType type,const int8_t hp)
+void Fighter::load(const EnemyType type)
 {
-	this->type = type;
-	this->hp = hp;
+	//To:do : Load character data from progmem.
+	char tempname[] = "Skeleton";
+	strcpy(name,tempname);
+	hpMax = 30;
+	hp = hpMax;
+
 }
 
-void Fighter::setHP(const int8_t hp)
+void Fighter::player(const Player playerdata)	//Uses players stats
 {
-	this->hp = hp;
-}
-
-int8_t Fighter::getHP()
-{
-	return this->hp;
+	strcpy(name,"You");
+	hpMax = playerdata.hpMax;
+	hp = playerdata.hp;
 }
