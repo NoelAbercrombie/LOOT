@@ -47,8 +47,9 @@ public:
 		DEBUG_ASSERT(index < Capacity);
 		DEBUG_ASSERT(index < this->next);
 
-		for (uint8_t i = index; i < this->next - 1; ++i)
+		for(uint8_t i = index; i < this->next; ++i)
 			this->items[i] = this->items[i + 1];
+		--this->next;	
 	}
 
 	bool contains(const TItem item) // O(n)
