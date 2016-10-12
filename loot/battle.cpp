@@ -17,7 +17,7 @@ void Battle::start(void)
 	enemyAnim = -32;
 	enemyStop = System::ScreenCentreY + 8;
 
-	battleState = 0;	//battleState = BattleType::Intro;
+	battleState = battleType::Start;
 	//enemy.load(EnemyType Skeleton);
 	//player.Player(Player playerData);
 }
@@ -31,15 +31,15 @@ void Battle::step(void)
 {
 	switch(battleState)
 	{
-		case 0:	//battle start
+		case battleType::Start
 		{
 			enemyAnim += 4;
 			if(enemyAnim < enemyStop)
 			{
-				battleState = 1;	//battleState = battleType::Menu;
+				battleState = battleType::Select;	//battleState = battleType::Menu;
 			}
 		}; break;
-		case 1:
+		case battleType::Select
 		{
 			if(ab->isPushed(Button::Up)
 			{

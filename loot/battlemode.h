@@ -1,10 +1,11 @@
 #pragma once
 #include <stdint.h>
 
-enum class battleState : uint8_t
+enum class battleType : uint8_t
 {
 	Start,
 	Select,
+	Attack,
 	Items,
 	Run,
 	PlayerTurn,
