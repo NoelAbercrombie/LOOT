@@ -1,6 +1,6 @@
 #pragma once
 #include <stdint.h>
-#include "ArduboyCore.h"
+#include "core\core.h"
 
 enum class Button : uint8_t
 {

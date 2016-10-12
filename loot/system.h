@@ -1,10 +1,10 @@
 #pragma once
 
-#include "arduboy2.h"
+#include "arduboy.h"
 #include "gamestate.h"
 #include "button.h"
 
-class System : public Arduboy2
+class System : public Arduboy
 {
 	private:
 		uint8_t nowInput;
@@ -21,7 +21,7 @@ class System : public Arduboy2
 	public:
 		// Explicitly calling parent's default constructor for the sake of clarity.
 		// Arduboy's constructor would be called even if the explicit call were removed.
-		System(void) : Arduboy2()
+		System(void) : Arduboy()
 		{
 			this->lastState = GameState::Null;
 			this->state = GameState::Menu;
