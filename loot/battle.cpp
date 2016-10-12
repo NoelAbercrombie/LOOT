@@ -101,7 +101,7 @@ void Battle::draw(void)
 		drawBar(2, 2 , System::ScreenCentreX-4, 40, 60);
 		drawBar(System::ScreenCentreX+2, 2, System::ScreenCentreX-4, 100, 110);
 
-		if (ready)
+		if (battleState == battleType::Select)
 		{
 	      ab->setCursor(System::ScreenCentreX+10, 16);
 	      ab->print(F("Fight"));
