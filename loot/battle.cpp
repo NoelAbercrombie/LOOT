@@ -1,5 +1,6 @@
 #include "battle.h"
 #include "enemytype.h"
+#include "battlemode.h"
 #include "graphics.h"
 #include "fighter.h"
 #include "gamestate.h"
@@ -16,6 +17,7 @@ void Battle::start(void)
 	enemyAnim = -32;
 	enemyStop = System::ScreenCentreY + 8;
 
+	battleState = 0;	//battleState = BattleType::Intro;
 	//enemy.load(EnemyType Skeleton);
 	//player.Player(Player playerData);
 }
@@ -27,45 +29,45 @@ void Battle::attack()
 
 void Battle::step(void)
 {
-	ready = true;
-	if(enemyAnim < enemyStop)
+	switch(battleState)
 	{
-		enemyAnim += 4;
-		ready = false;
-	}
-
-	if(ready)	//if the player can press buttons
-	{
-		if(ab->isPushed(Button::A))
+		case 0:	//battle start
 		{
-			switch(select)
+			enemyAnim += 4;
+			if(enemyAnim < enemyStop)
 			{
-				case 0:	
+				battleState = 1;	//battleState = battleType::Menu;
+			}
+		}; break;
+		case 1:
+		{
+			if(ab->isPushed(Button::Up)
+			{
+				if(select > 0)	select--;
+			}
+			if(ab->isPushed(Button::Down))
+			{
+				if(select < 2)	select++;
+			}
+			if(ab->isPushed(Button::A))
+			{
+				switch(select)
 				{
-					attack();
-					break;
-				}
-				case 1:
-				{
-					break;
-				}
-				case 2:
-				{
-					ab->setState(GameState::Gameplay);
-					break;
+					case 0:
+					{
+						attack();
+					}; break;
+					case 1:
+					{
+						
+					}; break;
+					case 2:
+					{
+						run();
+					}; break;
 				}
 			}
-		}
-
-		if(ab->isPushed(Button::Up))
-		{
-			if(select > 0) --select;
-		}
-
-		if(ab->isPushed(Button::Down))
-		{
-			if(select < 2) ++select;
-		}	
+		}; break;
 	}
 }
 

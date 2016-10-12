@@ -1,6 +1,7 @@
 #pragma once
 #include <stdint.h>
 #include "system.h"
+#include "battlemode.h"
 #include "enemytype.h"
 #include "player.h"
 
@@ -24,6 +25,7 @@ private:
 	int8_t enemyAnim;
 	int8_t enemyStop;
 
+	uint8_t battleState;	//to:do make this a type
 public:
 	Battle(System & ab, Player & playerData);
 
