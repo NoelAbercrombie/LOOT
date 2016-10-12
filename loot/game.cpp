@@ -53,15 +53,20 @@ void Game::step(void)
   				player->init();
   				world->init();
   				ab->stateEndChange();
-  			}
-  			player->step();
+  			}        
+        player->step();    
   			render->step();
   			render->draw();
-  			player->resetMoved();
+        player->resetMoved();
   			break;
   		}
   		case GameState::Battle:
   		{
+        if (ab->getLastState() == GameState::Gameplay) //cheaper than checking if last frame was not battle
+        {
+          battle->start();
+          ab->stateEndChange();
+        }
   			battle->step();
   			render->drawView();
   			battle->draw();
@@ -70,7 +75,12 @@ void Game::step(void)
       case GameState::Cutscene:
       {
         cutscenes->step();
+        if(cutscenes->drawView)
+        {
+          render->draw();
+        }
         cutscenes->draw();
+        break;
       }
     }
 }

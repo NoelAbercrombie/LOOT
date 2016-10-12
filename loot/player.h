@@ -4,23 +4,26 @@
 
 class System;
 class World;
+class Cutscenes;
 
 class Player
 {
   private:
     System * ab;
     World * world;
+    Cutscenes * cutscenes;
+
     bool moved;
     Direction dir;
     
   public:
     int8_t x, y; //needs to be signed so checking negative positions doesn't bug out
     uint8_t battleSteps;
-    uint8_t hp, sp;
+    uint8_t hp, sp, hpMax, spMax;
     char name[8];
 
   public:
-    Player(System & ab, World & world);
+    Player(System & ab, World & world, Cutscenes & cutscenes);
 
     void init(void);
     Direction getDirection(void) const;

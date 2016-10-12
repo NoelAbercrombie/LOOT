@@ -102,7 +102,7 @@ uint8_t World::getBattleChance(void)
 //BURN EVERYTHING BELOW THIS LINE
 /////
 
-ItemType World::getItemType(const int8_t x, const int8_t y)
+ItemType World::getItemType(const int8_t x, const int8_t y) const
 {
   //this is horrible please change
   for(uint8_t i; i<16; ++i) //loop every chest
@@ -110,7 +110,7 @@ ItemType World::getItemType(const int8_t x, const int8_t y)
     // As if by magic these former array indexers are now indexing a list.
     // This is one of those cases where if you wield the chainsaw correctly
     // you'll cut the tree and not your fingers.
-    if ((chests[i].getX() == x) && (chests[i].getY() == y)) //if chest is on position, return contents
+    if (chests[i].onPosition(x,y))
       return (chests[i].getType());
   }
   return ItemType::None;
@@ -124,7 +124,7 @@ bool World::hasItem(const int8_t x, const int8_t y) const
 {
   for(uint8_t i; i<16; ++i) //loop every chest
   {
-    if ((chests[i].getX() == x) && (chests[i].getY() == y))
+    if (chests[i].onPosition(x,y))
       return true;
   }
   return false;
@@ -133,12 +133,12 @@ bool World::hasItem(const int8_t x, const int8_t y) const
 // How this is actually legal without a default return value is a mystery
 // I'd recommend assigning 0 as the 'empty' or 'invalid' type if
 // you don't change this to an enum
-uint8_t World::getItemID(const int8_t x, const int8_t y)
+uint8_t World::getItemIndex(const int8_t x, const int8_t y) const
 {
   //Will act weirdly if no chest on tile; 0 is a valid id
   for(uint8_t i; i<16; ++i) //loop every chest
   {
-    if ((chests[i].getX() == x) && (chests[i].getY() == y))
+    if (chests[i].onPosition(x,y))
       return i;
   }
 }
@@ -150,4 +150,15 @@ uint8_t World::getItemID(const int8_t x, const int8_t y)
 void World::setItem(const uint8_t item,const int8_t x, const int8_t y, const ItemType type)
 {
   chests[item] = Chest(x,y,type);
+}
+
+void World::takeItem(const uint8_t item)
+{
+  //do inventory magic here
+  removeItem(item);
+}
+
+void World::removeItem(const uint8_t item)
+{
+  chests.removeAt(item);
 }

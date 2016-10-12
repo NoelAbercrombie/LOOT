@@ -3,11 +3,14 @@
 #include "system.h"
 #include "direction.h"
 #include "TileType.h"
+#include "cutscenes.h"
+#include "cutscenetype.h"
 
-Player::Player(System & ab, World & world)
+Player::Player(System & ab, World & world, Cutscenes & cutscenes)
 {
   this->ab = &ab;
   this->world = &world;
+  this->cutscenes = &cutscenes;
 }
 
 void Player::init(void)
@@ -15,6 +18,8 @@ void Player::init(void)
   moved = true;
   x = 1;
   y = 1;
+  hpMax = 10;
+  spMax = 10;
   hp = 10;
   sp = 10;
 }
@@ -88,13 +93,14 @@ void Player::step()
 
   if(moved)
   {
+    Serial.print("Step : ");
     Serial.println(battleSteps);
     if (world->hasItem(x,y))
     {
-      Serial.print(F("Item! Type : "));
+      Serial.print(F("Item : Type : "));
       Serial.print(static_cast<uint8_t>(world->getItemType(x,y)));
       Serial.print(F(" ID : "));
-      Serial.println(world->getItemID(x,y));
+      Serial.println(world->getItemIndex(x,y));
     }
     else if (random(battleSteps) > world->getBattleChance())
     { 
@@ -102,5 +108,12 @@ void Player::step()
       Serial.println(F("Battle!"));
       battleSteps = 0;
     }
+  }
+
+  if (world->hasItem(x,y) && ab->isPushed(Button::A))
+  {
+    world->takeItem(world->getItemIndex(x,y));
+    cutscenes->play(CutsceneType::OpenChest);
+    moved = true; //makes screen redraw, currently flickers for 1 frame.
   }
 }

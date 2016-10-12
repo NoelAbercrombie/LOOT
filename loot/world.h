@@ -33,9 +33,12 @@ class World
 
     //item stuff
     void setItem(const uint8_t item, const int8_t x, const int8_t y, const ItemType type);
-    ItemType getItemType(const int8_t x, const int8_t y);
-    uint8_t getItemID(const int8_t x, const int8_t y);
+    ItemType getItemType(const int8_t x, const int8_t y) const;
+    uint8_t getItemIndex(const int8_t x, const int8_t y) const;
     // This should be 'hasItem',
     // 'getItem' implies you can actually retrieve a reference to said item
     bool hasItem(const int8_t x, const int8_t y) const;
+
+    void takeItem(const uint8_t item);
+    void removeItem(const uint8_t item);
 };

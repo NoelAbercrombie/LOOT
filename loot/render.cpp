@@ -1,5 +1,6 @@
 #include "system.h"
 #include "graphics.h"
+#include "gamestate.h"
 #include "render.h"
 #include "world.h"
 #include "player.h"
@@ -86,14 +87,14 @@ void Render::calculateView(const int8_t x, const int8_t y, const Direction dir)
 
 void Render::step(void)
 {
-  if(player->hasMoved()) //only recalculate on movement
-   {
-     calculateView(player->x, player->y, player->getDirection());
-   }
 }
 
 void Render::draw(void)
 {
+  if(player->hasMoved()) //only recalculate on movement
+   {
+     calculateView(player->x, player->y, player->getDirection());
+   }
   drawView();
   drawMap();
 }
@@ -168,27 +169,30 @@ void Render::drawView(void)
   ab->fillRect(System::ScreenCentreX, 0, 16, System::ScreenHeight, 0);  //hide any leaky drawing
   ab->drawRect(0, 0, System::ScreenWidth / 2, System::ScreenHeight, 1);
 
-  #if defined(CHAR_COMPASS)
-  char c = '\0';
-  switch(player->getDirection())
+  if(ab->getState() != GameState::Battle)
   {
-    case Direction::North: { c = 'N'; break; }
-    case Direction::East:  { c = 'E'; break; }
-    case Direction::South: { c = 'S'; break; }
-    case Direction::West:  { c = 'W'; break; }
+    #if defined(CHAR_COMPASS)
+    char c = '\0';
+    switch(player->getDirection())
+    {
+      case Direction::North: { c = 'N'; break; }
+      case Direction::East:  { c = 'E'; break; }
+      case Direction::South: { c = 'S'; break; }
+      case Direction::West:  { c = 'W'; break; }
+    }
+    ab->drawChar(32 - (5 / 2), (7 / 2), c, 1, 0, 1);
+    #else
+    const uint8_t * image;
+    switch(player->getDirection())
+    {
+      case Direction::North: { image = imgCompassN; break; }
+      case Direction::East:  { image = imgCompassE; break; }
+      case Direction::South: { image = imgCompassS; break; }
+      case Direction::West:  { image = imgCompassW; break; }
+    }
+    ab->drawSpriteCentred(32, 6, image, 1);
+    #endif
   }
-  ab->drawChar(32 - (5 / 2), (7 / 2), c, 1, 0, 1);
-  #else
-  const uint8_t * image;
-  switch(player->getDirection())
-  {
-    case Direction::North: { image = imgCompassN; break; }
-    case Direction::East:  { image = imgCompassE; break; }
-    case Direction::South: { image = imgCompassS; break; }
-    case Direction::West:  { image = imgCompassW; break; }
-  }
-  ab->drawSpriteCentred(32, 6, image, 1);
-  #endif
 }
 
 void Render::drawMap(void)
