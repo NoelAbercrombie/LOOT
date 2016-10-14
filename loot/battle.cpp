@@ -1,5 +1,6 @@
 #include "battle.h"
 #include "enemytype.h"
+#include "battlemode.h"
 #include "graphics.h"
 #include "fighter.h"
 #include "gamestate.h"
@@ -16,56 +17,62 @@ void Battle::start(void)
 	enemyAnim = -32;
 	enemyStop = System::ScreenCentreY + 8;
 
+	battleState = battleType::Start;
 	//enemy.load(EnemyType Skeleton);
 	//player.Player(Player playerData);
 }
 
 void Battle::attack()
 {
-	//?
+	
+}
+void Battle::run()
+{
+	//this needs more stuff in it
+	ab->setState(GameState::Gameplay);
 }
 
 void Battle::step(void)
 {
-	ready = true;
-	if(enemyAnim < enemyStop)
+	switch(battleState)
 	{
-		enemyAnim += 4;
-		ready = false;
-	}
-
-	if(ready)	//if the player can press buttons
-	{
-		if(ab->isPushed(Button::A))
+		case battleType::Start:
 		{
-			switch(select)
+			enemyAnim += 4;
+			if(enemyAnim < enemyStop)
 			{
-				case 0:	
+				battleState = battleType::Select;	//battleState = battleType::Menu;
+			}
+		}; break;
+		case battleType::Select:
+		{
+			if(ab->isPushed(Button::Up))
+			{
+				if(select > 0)	select--;
+			}
+			if(ab->isPushed(Button::Down))
+			{
+				if(select < 2)	select++;
+			}
+			if(ab->isPushed(Button::A))
+			{
+				switch(select)
 				{
-					attack();
-					break;
-				}
-				case 1:
-				{
-					break;
-				}
-				case 2:
-				{
-					ab->setState(GameState::Gameplay);
-					break;
+					case 0:
+					{
+						attack();
+					}; break;
+					case 1:
+					{
+						
+					}; break;
+					case 2:
+					{
+						run();
+					}; break;
 				}
 			}
-		}
-
-		if(ab->isPushed(Button::Up))
-		{
-			if(select > 0) --select;
-		}
-
-		if(ab->isPushed(Button::Down))
-		{
-			if(select < 2) ++select;
-		}	
+		}; break;
 	}
 }
 
@@ -86,20 +93,18 @@ void Battle::draw(void)
 {
 	ab->drawSpriteCentred(System::ScreenCentreX / 2, enemyAnim, imgSkeleton1, 1);
 
-	if (enemyAnim < enemyStop)
+	bool drawhud = true;
+	switch(battleState)
 	{
-		ab->setCursor(System::ScreenCentreX+2, 8);
-		ab->print(F("Skellybones wants"));
-		ab->setCursor(System::ScreenCentreX+2, 16);
-		ab->print(F("to fight!"));
-	}
-	else
-	{
-		//draw hp bars
-		drawBar(2, 2 , System::ScreenCentreX-4, 40, 60);
-		drawBar(System::ScreenCentreX+2, 2, System::ScreenCentreX-4, 100, 110);
-
-		if (ready)
+		case battleType::Start:
+		{
+			ab->setCursor(System::ScreenCentreX+2, 8);
+			ab->print(F("Skellybones wants"));
+			ab->setCursor(System::ScreenCentreX+2, 16);
+			ab->print(F("to fight!"));
+			drawhud = false;
+		}; break;
+		case battleType::Select:
 		{
 	      ab->setCursor(System::ScreenCentreX+10, 16);
 	      ab->print(F("Fight"));
@@ -110,7 +115,14 @@ void Battle::draw(void)
 	      //select cursor
 	      ab->setCursor(System::ScreenCentreX+2, 16 + (8 * select));
 	      ab->print(F(">"));
-		}
+		}; break;
+	}
+
+	if(drawhud)
+	{
+		//draw hp bars
+		drawBar(2, 2 , System::ScreenCentreX-4, 40, 60);
+		drawBar(System::ScreenCentreX+2, 2, System::ScreenCentreX-4, 100, 110);
 	}
 }
 
