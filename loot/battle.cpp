@@ -24,14 +24,19 @@ void Battle::start(void)
 
 void Battle::attack()
 {
-	//?
+	
+}
+void Battle::Run()
+{
+	//this needs more stuff in it
+	ab->setState(GameState::Gameplay);
 }
 
 void Battle::step(void)
 {
 	switch(battleState)
 	{
-		case battleType::Start
+		case battleType::Start:
 		{
 			enemyAnim += 4;
 			if(enemyAnim < enemyStop)
@@ -39,7 +44,7 @@ void Battle::step(void)
 				battleState = battleType::Select;	//battleState = battleType::Menu;
 			}
 		}; break;
-		case battleType::Select
+		case battleType::Select:
 		{
 			if(ab->isPushed(Button::Up)
 			{
@@ -101,7 +106,7 @@ void Battle::draw(void)
 		drawBar(2, 2 , System::ScreenCentreX-4, 40, 60);
 		drawBar(System::ScreenCentreX+2, 2, System::ScreenCentreX-4, 100, 110);
 
-		if (ready)
+		if (battleState == battleType::Select)
 		{
 	      ab->setCursor(System::ScreenCentreX+10, 16);
 	      ab->print(F("Fight"));

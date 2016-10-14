@@ -3,6 +3,7 @@
 
 enum class battleType : uint8_t
 {
+	None,
 	Start,
 	Select,
 	Attack,
