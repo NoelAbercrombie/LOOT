@@ -38,7 +38,7 @@ void Player::changeDirection(const Direction direction)
 
 bool Player::hasMoved(void) const
 {
- return moved;
+  return moved;
 }
 
 void Player::resetMoved(void)

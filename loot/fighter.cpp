@@ -19,3 +19,16 @@ void Fighter::player(const Player playerdata)	//Uses players stats
 	hpMax = playerdata.hpMax;
 	hp = playerdata.hp;
 }
+
+void damage(const uint8_t attackpower)
+{
+	hp -= attackpower;	//Do something defency with this
+	if (hp < -hpmax/4)	//If severely damaged, explode!
+	{
+		diehard()
+	}
+	if (hp < 0)
+	{
+		die();
+	}
+};
