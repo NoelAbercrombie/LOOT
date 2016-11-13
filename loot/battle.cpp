@@ -14,48 +14,62 @@ Battle::Battle(System & ab, Player & playerData)
 
 Battle::Step(void)
 {
-	switch(battleState)
+	switch(battleState)	//ToDo : Pointerify this
 	{
-		case battleType::PlayerTurn
+		case BattleMode::start:
 		{
-			enemy.damage(player.attackpower);
+			start();
 		}; break;
-		case battleType::EnemyTurn
+		case BattleMode::Menu:
 		{
-			player.damage(enemy.attackpower);
+			menu();
+		}; break;
+		case BattleMode::playerTurn
+		{
+			playerTurn();
+		}; break;
+		case BattleMode::enemyTurn
+		{
+			enemyTurn();
+		}; break;
+		case BattleMode::win
+		{
+			win();
+		}; break;
+		case BattleMode::lose
+		{
+			lose();
 		}; break;
 	}
 }
 
 void Battle::draw(void)
 {
-	ab->drawSpriteCentred(System::ScreenCentreX / 2, enemyAnim, imgSkeleton1, 1);
-
-	if (enemyAnim < enemyStop)
+	switch(battleState)	//ToDo : Pointerify this
 	{
-		ab->setCursor(System::ScreenCentreX+2, 8);
-		ab->print(F("Skellybones wants"));
-		ab->setCursor(System::ScreenCentreX+2, 16);
-		ab->print(F("to fight!"));
-	}
-	else
-	{
-		//draw hp bars
-		drawBar(2, 2 , System::ScreenCentreX-4, 40, 60);
-		drawBar(System::ScreenCentreX+2, 2, System::ScreenCentreX-4, 100, 110);
-
-		if (battleState == battleType::Select)
+		case BattleMode::start:
 		{
-	      ab->setCursor(System::ScreenCentreX+10, 16);
-	      ab->print(F("Fight"));
-	      ab->setCursor(System::ScreenCentreX+10, 24);
-	      ab->print(F("Item"));
-	      ab->setCursor(System::ScreenCentreX+10, 32);
-	      ab->print(F("Run"));
-	      //select cursor
-	      ab->setCursor(System::ScreenCentreX+2, 16 + (8 * select));
-	      ab->print(F(">"));
-		}
+			startDraw();
+		}; break;
+		case BattleMode::Menu:
+		{
+			menuDraw();
+		}; break;
+		case BattleMode::playerTurn
+		{
+			playerTurnDraw();
+		}; break;
+		case BattleMode::enemyTurn
+		{
+			enemyTurnDraw();
+		}; break;
+		case BattleMode::win
+		{
+			winDraw();
+		}; break;
+		case BattleMode::lose
+		{
+			loseDraw();
+		}; break;
 	}
 }
-
