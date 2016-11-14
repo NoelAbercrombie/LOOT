@@ -1,0 +1,13 @@
+Top
+	Fight	->	Menu::Fight
+	Item	->	Menu::Item
+	Run		->	Menu::Run
+
+Fight
+		
+Item
+
+Run
+-Are you sure?
+	Yes		->	end();
+	no		->	Menu::Top

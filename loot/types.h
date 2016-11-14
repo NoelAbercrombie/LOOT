@@ -2,9 +2,16 @@
 #pragma once
 #include <stdint.h>
 
+enum class battleMenu : uint8_t
+{
+	Top,
+	Fight,
+	Item,
+	Run,
+}
+
 enum class battleMode : uint8_t
 {
-	None,
 	Load,
 	Start,
 	Select,
@@ -20,4 +27,3 @@ enum class EnemyType : uint8_t
 	None,
 	Skellybones,
 };
-

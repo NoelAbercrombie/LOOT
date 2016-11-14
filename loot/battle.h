@@ -16,8 +16,8 @@ private:
 	bool ready;
 
 	//menu
-	uint8_t menu;
-	uint8_t menuselect; 
+	int8_t menu;
+	int8_t menuselect; 
 
 	//animation
 	int8_t enemyAnim;

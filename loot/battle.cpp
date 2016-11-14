@@ -1,4 +1,5 @@
 #include "battle.h"
+#include "button.h"
 #include "types.h"
 #include "graphics.h"
 #include "fighter.h"
@@ -94,13 +95,60 @@ void Battle::end()
 }
 void Battle::playerTurn(void)	{};
 void Battle::enemyTurn(void)	{};
+
 void Battle::drawWorld(void)	{};
 void Battle::drawHUD(void)		{};
-void Battle::drawMenu(void)		{};
+
+void Battle::drawMenu(void)		
+{
+	switch(menu)
+	{
+		case battleMenu::Top:
+		{
+			
+		};	break;
+		case battleMenu::Fight:
+		{	
+
+		};	break;
+		case battleMenu::Item:
+		{
+
+		};	break;
+		case battleMenu::Run:
+		{
+
+		}; 	break;
+	}
+};
 
 void Battle::select(void)
 {
-	//stubbity stub
+	if(ab->pressed(Button::Up))
+		{	menuSelect--;	}
+	if(ab->pressed(Button::Down))
+		{	menuSelect++;	}
+	if(menuSelect<0)	{	menuSelect = 0;	}
+
+	switch(menu)
+	{
+		case battleMenu::Top:
+		{
+
+		};	break;
+		case battleMenu::Fight:
+		{	
+
+		};	break;
+		case battleMenu::Item:
+		{
+
+		};	break;
+		case battleMenu::Run:
+		{
+
+		}; 	break;
+	}
 }
 
 void Battle::draw(void)
