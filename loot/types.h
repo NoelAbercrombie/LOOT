@@ -2,6 +2,7 @@
 #pragma once
 #include <stdint.h>
 
+/*
 enum class battleMenu : uint8_t
 {
 	Top,
@@ -9,6 +10,7 @@ enum class battleMenu : uint8_t
 	Item,
 	Run,
 }
+*/
 
 enum class battleMode : uint8_t
 {

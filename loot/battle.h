@@ -17,7 +17,7 @@ private:
 
 	//menu
 	int8_t menu;
-	int8_t menuselect; 
+	int8_t menuSelect; 
 
 	//animation
 	int8_t enemyAnim;

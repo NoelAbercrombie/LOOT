@@ -11,16 +11,6 @@ Battle::Battle(System & ab)
 	this->ab = &ab;
 }
 
-void Battle::start(void)
-{
-	enemyAnim = -32;
-	enemyStop = System::ScreenCentreY + 8;
-
-	battleState = battleType::Start;
-	//enemy.load(EnemyType Skeleton);
-	//player.Player(Player playerData);
-}
-
 void Battle::run()
 {
 	//this needs more stuff in it
@@ -103,19 +93,19 @@ void Battle::drawMenu(void)
 {
 	switch(menu)
 	{
-		case battleMenu::Top:
+		case 0://battleMenu::Top:
 		{
-			
+
 		};	break;
-		case battleMenu::Fight:
+		case 1://battleMenu::Fight:
 		{	
 
 		};	break;
-		case battleMenu::Item:
+		case 2://battleMenu::Item:
 		{
 
 		};	break;
-		case battleMenu::Run:
+		case 3://battleMenu::Run:
 		{
 
 		}; 	break;
@@ -124,27 +114,27 @@ void Battle::drawMenu(void)
 
 void Battle::select(void)
 {
-	if(ab->pressed(Button::Up))
+	if(ab->isPushed(Button::Up))
 		{	menuSelect--;	}
-	if(ab->pressed(Button::Down))
+	if(ab->isPushed(Button::Down))
 		{	menuSelect++;	}
 	if(menuSelect<0)	{	menuSelect = 0;	}
 
 	switch(menu)
 	{
-		case battleMenu::Top:
+		case 0://battleMenu::Top:
 		{
 
 		};	break;
-		case battleMenu::Fight:
+		case 1://battleMenu::Fight:
 		{	
 
 		};	break;
-		case battleMenu::Item:
+		case 2://battleMenu::Item:
 		{
 
 		};	break;
-		case battleMenu::Run:
+		case 3://battleMenu::Run:
 		{
 
 		}; 	break;
