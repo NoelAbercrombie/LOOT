@@ -1,11 +1,9 @@
 #pragma once
 #include <stdint.h>
 #include "system.h"
-#include "battlemode.h"
-#include "enemytype.h"
+#include "types.h"
 #include "player.h"
-
-class Fighter;
+#include "fighter.h"
 
 class Battle
 {
@@ -19,27 +17,37 @@ private:
 
 	//menu
 	uint8_t menu;
-	uint8_t select; 
+	uint8_t menuselect; 
 
 	//animation
 	int8_t enemyAnim;
 	int8_t enemyStop;
 
-	battleMode battleState;	//to:do make this a type
+	Fighter player;
+	Fighter enemy;
+
+	battleMode battleState;
 public:
-	Battle(System & ab, Player & playerData);
+	Battle(System & ab);
 
-	void begin();
-	void step();
-	void draw();
+	void step(void);
+	void draw(void);
 
-	//battle states, needs a tidy. 
+	//UI chunks
+	void drawWorld(void);
+	void drawHUD(void);
+	void drawMenu();
+
+	//battle states, needs pointerification
+	void load(void);
 	void start(void);		
-	void menu(void);		void menuDraw(void);
-	void playerTurn(void);	void playerTurnDraw(void);
-	void enemyTurn(void);	void enemyTurnDraw(void);
-	void win(void);			void winDraw(void);
-	void lose(void);		void loseDraw(void);
+	void select(void);		
+	void playerTurn(void);	
+	void enemyTurn(void);	
+	void win(void);			
+	void lose(void);		
+
+	void end(void);
 	
 	//drawing helpers
 	void drawBar(const uint8_t x, const uint8_t y, const uint8_t width, const uint8_t value, const uint8_t capacity);

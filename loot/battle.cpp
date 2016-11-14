@@ -1,75 +1,108 @@
 #include "battle.h"
-#include "enemytype.h"
-#include "battlemode.h"
+#include "types.h"
 #include "graphics.h"
 #include "fighter.h"
 #include "gamestate.h"
 #include "system.h"
 
-Battle::Battle(System & ab, Player & playerData)
+Battle::Battle(System & ab)
 {
 	this->ab = &ab;
-	this->playerData = &playerData;
 }
 
-Battle::Step(void)
+void Battle::step(void)
 {
 	switch(battleState)	//ToDo : Pointerify this
 	{
-		case BattleMode::start:
+		case battleMode::Start:
 		{
 			start();
 		}; break;
-		case BattleMode::Menu:
+		case battleMode::Select:
 		{
-			menu();
+			select();
 		}; break;
-		case BattleMode::playerTurn
+		case battleMode::PlayerTurn:
 		{
 			playerTurn();
 		}; break;
-		case BattleMode::enemyTurn
+		case battleMode::EnemyTurn:
 		{
 			enemyTurn();
 		}; break;
-		case BattleMode::win
+		case battleMode::Win:
 		{
 			win();
 		}; break;
-		case BattleMode::lose
+		case battleMode::Lose:
 		{
 			lose();
 		}; break;
+	};
+}
+
+void Battle::load()
+{
+	//hardcoding a skellybones in here, change later
+	enemy.resetAll(100,25,30,EnemyType::Skellybones);
+
+	enemy.xoffset = 48;
+	enemy.drawy = -64;
+
+	//player stats are retained from last battle?
+	battleState = battleMode::Start;
+}
+
+void Battle::start()
+{
+	enemy.drawy += 2;
+	if (enemy.drawy >= enemy.yoffset)
+	{
+		enemy.drawy = enemy.yoffset;
+		battleState = battleMode::Select;	//go to battle menu
 	}
+}
+
+void Battle::win()
+{
+	end();
+}
+void Battle::lose()
+{
+	end();
+}
+void Battle::end()
+{
+	//cleans stuff up to begin again later
+	battleState = battleMode::Load;
+}
+void Battle::playerTurn(void)	{};
+void Battle::enemyTurn(void)	{};
+void Battle::drawWorld(void)	{};
+void Battle::drawHUD(void)		{};
+void Battle::drawMenu(void)		{};
+
+void Battle::select(void)
+{
+	//stubbity stub
 }
 
 void Battle::draw(void)
 {
-	switch(battleState)	//ToDo : Pointerify this
+	drawWorld();
+	drawHUD();
+	if (battleState == battleMode::Select)
 	{
-		case BattleMode::start:
-		{
-			startDraw();
-		}; break;
-		case BattleMode::Menu:
-		{
-			menuDraw();
-		}; break;
-		case BattleMode::playerTurn
-		{
-			playerTurnDraw();
-		}; break;
-		case BattleMode::enemyTurn
-		{
-			enemyTurnDraw();
-		}; break;
-		case BattleMode::win
-		{
-			winDraw();
-		}; break;
-		case BattleMode::lose
-		{
-			loseDraw();
-		}; break;
+		drawMenu();
+	}
+	else
+	{
+		/*
+		What to put here? Some sort of update feed?
+		>Skellybones attacks!
+		>Critical hit 104HP!
+		>YOU DIED
+		etc
+		*/
 	}
 }

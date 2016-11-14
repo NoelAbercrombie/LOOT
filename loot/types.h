@@ -7,7 +7,7 @@ enum class battleMode : uint8_t
 	None,
 	Load,
 	Start,
-	Menu,
+	Select,
 	Run,
 	PlayerTurn,
 	EnemyTurn,
