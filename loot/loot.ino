@@ -19,20 +19,28 @@ Menu menu = Menu(ab, cutscenes);
 Render render = Render(ab, world, player);
 Game game = Game(ab, render, menu, player, world, cutscenes, battle); //controls everything!
 
-void setup(void)
+int main(void)
 {
+	init();		
+
+	#ifdef USBCON
+    	USBDevice.attach();
+	#endif
+
 	ab.begin();
 	Serial.begin(9600);
 	Serial.println(F("Start!"));
-}
 
-void loop(void)
-{
-	if(!ab.nextFrame())
-		return;
-
-	ab.update();
-	ab.clear();
-	game.step();
-	ab.display();
+	//put a return; right here for maximum fun
+	
+	while(1)
+	{
+		if(ab.nextFrame())
+	    {
+			ab.update();
+			ab.clear();
+			game.step();
+			ab.display();
+	    }
+	}
 }
