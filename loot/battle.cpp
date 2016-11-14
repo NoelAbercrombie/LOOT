@@ -10,6 +10,22 @@ Battle::Battle(System & ab)
 	this->ab = &ab;
 }
 
+void Battle::start(void)
+{
+	enemyAnim = -32;
+	enemyStop = System::ScreenCentreY + 8;
+
+	battleState = battleType::Start;
+	//enemy.load(EnemyType Skeleton);
+	//player.Player(Player playerData);
+}
+
+void Battle::run()
+{
+	//this needs more stuff in it
+	ab->setState(GameState::Gameplay);
+}
+
 void Battle::step(void)
 {
 	switch(battleState)	//ToDo : Pointerify this
@@ -19,7 +35,7 @@ void Battle::step(void)
 			start();
 		}; break;
 		case battleMode::Select:
-		{
+		{	
 			select();
 		}; break;
 		case battleMode::PlayerTurn:

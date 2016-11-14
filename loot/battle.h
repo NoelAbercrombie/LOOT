@@ -44,6 +44,7 @@ public:
 	void select(void);		
 	void playerTurn(void);	
 	void enemyTurn(void);	
+	void run(void);
 	void win(void);			
 	void lose(void);		
 
