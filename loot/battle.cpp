@@ -52,8 +52,6 @@ void Battle::load()
 {
 	//hardcoding a skellybones in here, change later
 	enemy.resetAll(100,25,30,EnemyType::Skellybones);
-
-	enemy.xoffset = 48;
 	enemy.drawy = -64;
 
 	//player stats are retained from last battle?
