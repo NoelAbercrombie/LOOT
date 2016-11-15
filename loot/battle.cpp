@@ -88,32 +88,45 @@ void Battle::end()
 	//cleans stuff up to begin again later
 	battleState = battleMode::Load;
 }
-void Battle::playerTurn(void)	{};
-void Battle::enemyTurn(void)	{};
+void Battle::playerTurn(void)	
+{
+	//tie into attack picker later
+	enemy.damage(player.attack);
+};
+void Battle::enemyTurn(void)	
+{
+	//insert AI here
+};
 
 void Battle::drawWorld(void)	{};
 void Battle::drawHUD(void)		{};
 
 void Battle::drawMenu(void)		
 {
-	switch(menu)
+	//hold my beer, i've got this
+	const char PROGMEM text00 = "BATTLE!";const char PROGMEM text01 = "FIGHT";const char PROGMEM text02 = "ITEM";const char PROGMEM text03 = "RUN";
+	const char PROGMEM text10 = "FIGHT!"; const char PROGMEM text11 = "ATTACK";const char PROGMEM text12="BACK";
+	const char PROGMEM text20 = "ITEMS\n";	//rest is generated
+	const char PROGMEM text30 = "RUN!"; const char PROGMEM text31="No";	const char PROGMEM text32="Yes";
+
+	const char* const PROGMEM texttable[] = { text00,text01,text02,text03,text10,text11,text12,text20,text30,text31,text32 };
+	const uint8_t const PROGMEM textnum[] = { 4,3,1,3 };
+	const uint8_t const PROGMEM textoffset[] = { 0,4,7,8 };
+
+	uint8_t menuID = <uint8_t>menu;	//cast out ID of menu page
+	uint8_t count = pgm_read_byte(textnum+menuID);	//get number of items on page
+	uint8_t offset = pgm_read_byte(textoffset+menuID);	//text array offset
+	char buffer[8];	//text buffer
+	for(uint8_t i=0; i<count; ++i)
 	{
-		case 0://battleMenu::Top:
-		{
+		strcpy_p(buffer, (PGM_P)pgm_read_word(&(string_table[offset+i])));	//wat
+		ab->setCursor(66,2+(i*8));
+		ab->print(buffer);
+	}
 
-		};	break;
-		case 1://battleMenu::Fight:
-		{	
-
-		};	break;
-		case 2://battleMenu::Item:
-		{
-
-		};	break;
-		case 3://battleMenu::Run:
-		{
-
-		}; 	break;
+	if(menu==battleMenu::Item)
+	{
+		//draw item selector here
 	}
 };
 

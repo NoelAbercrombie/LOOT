@@ -2,15 +2,13 @@
 #pragma once
 #include <stdint.h>
 
-/*
 enum class battleMenu : uint8_t
 {
-	Top,
-	Fight,
-	Item,
-	Run,
+	Top=0,
+	Fight=1,
+	Item=2,
+	Run=3,
 }
-*/
 
 enum class battleMode : uint8_t
 {
