@@ -1,5 +1,6 @@
 #pragma once
 #include <stdint.h>
+#include "cutscenes.h"
 #include "system.h"
 #include "types.h"
 #include "player.h"
@@ -9,7 +10,7 @@ class Battle
 {
 private:
 	System * ab;
-	Player * playerData;
+    Cutscenes * cutscenes;
 
 	//Fighter player;
 	//Fighter enemy;
@@ -28,7 +29,7 @@ private:
 
 	battleMode battleState;
 public:
-	Battle(System & ab);
+	Battle(System & ab, Cutscenes & cutscenes);
 
 	void step(void);
 	void draw(void);

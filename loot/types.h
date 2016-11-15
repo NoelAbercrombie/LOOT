@@ -8,7 +8,7 @@ enum class battleMenu : uint8_t
 	Fight=1,
 	Item=2,
 	Run=3,
-}
+};
 
 enum class battleMode : uint8_t
 {

@@ -1,3 +1,4 @@
+#include <avr/pgmspace.h>
 #include "battle.h"
 #include "button.h"
 #include "types.h"
@@ -7,9 +8,10 @@
 #include "gamestate.h"
 #include "system.h"
 
-Battle::Battle(System & ab)
+Battle::Battle(System & ab,Cutscenes & cutscenes)
 {
 	this->ab = &ab;
+	this->cutscenes = &cutscenes;
 }
 
 void Battle::run()
@@ -34,13 +36,11 @@ void Battle::step(void)
 		{
 			playerTurn();
 			if(enemy.alive())	{	battleState = battleMode::EnemyTurn;	}
-			else	{	battleState = battleMode::win;	}
+			else	{	battleState = battleMode::Win;	}
 		}; break;
 		case battleMode::EnemyTurn:
 		{
 			enemyTurn();
-			if(player.alive())	{	battleState = battleMode::Select;	}
-			else	{	battleState = battleMode::Lose;	}
 		}; break;
 		case battleMode::Win:
 		{
@@ -66,9 +66,9 @@ void Battle::load()
 void Battle::start()
 {
 	enemy.drawy += 2;
-	if (enemy.drawy >= enemy.yoffset)
+	if (enemy.drawy >= enemy.getYoffset())
 	{
-		enemy.drawy = enemy.yoffset;
+		enemy.drawy = enemy.getYoffset();
 		battleState = battleMode::Select;	//go to battle menu
 	}
 }
@@ -91,11 +91,12 @@ void Battle::end()
 void Battle::playerTurn(void)	
 {
 	//tie into attack picker later
-	enemy.damage(player.attack);
+	enemy.damage(player.getAttack());
 };
 void Battle::enemyTurn(void)	
 {
 	//insert AI here
+	player.damage(enemy.getAttack());
 };
 
 void Battle::drawWorld(void)	{};
@@ -103,28 +104,28 @@ void Battle::drawHUD(void)		{};
 
 void Battle::drawMenu(void)		
 {
-	//hold my beer, i've got this
+	//suggestions plz
 	const char PROGMEM text00 = "BATTLE!";const char PROGMEM text01 = "FIGHT";const char PROGMEM text02 = "ITEM";const char PROGMEM text03 = "RUN";
 	const char PROGMEM text10 = "FIGHT!"; const char PROGMEM text11 = "ATTACK";const char PROGMEM text12="BACK";
 	const char PROGMEM text20 = "ITEMS\n";	//rest is generated
 	const char PROGMEM text30 = "RUN!"; const char PROGMEM text31="No";	const char PROGMEM text32="Yes";
 
-	const char* const PROGMEM texttable[] = { text00,text01,text02,text03,text10,text11,text12,text20,text30,text31,text32 };
-	const uint8_t const PROGMEM textnum[] = { 4,3,1,3 };
-	const uint8_t const PROGMEM textoffset[] = { 0,4,7,8 };
+	const char* PROGMEM texttable[] = { text00,text01,text02,text03,text10,text11,text12,text20,text30,text31,text32 };
+	const uint8_t PROGMEM textnum[] = { 4,3,1,3 };
+	const uint8_t PROGMEM textoffset[] = { 0,4,7,8 };
 
-	uint8_t menuID = <uint8_t>menu;	//cast out ID of menu page
+	uint8_t menuID = static_cast<uint8_t>(menu);	//Unneeded for the moment, menu is already uint8_t
 	uint8_t count = pgm_read_byte(textnum+menuID);	//get number of items on page
 	uint8_t offset = pgm_read_byte(textoffset+menuID);	//text array offset
 	char buffer[8];	//text buffer
 	for(uint8_t i=0; i<count; ++i)
 	{
-		strcpy_p(buffer, (PGM_P)pgm_read_word(&(string_table[offset+i])));	//wat
+		strcpy_P(buffer, (PGM_P)pgm_read_word(&(texttable[offset+i])));	//wat
 		ab->setCursor(66,2+(i*8));
 		ab->print(buffer);
 	}
 
-	if(menu==battleMenu::Item)
+	if(menuID==static_cast<uint8_t>(battleMenu::Item))	//remove the cast once the type is sorted
 	{
 		//draw item selector here
 	}

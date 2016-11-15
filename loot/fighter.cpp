@@ -3,7 +3,7 @@
 #include "types.h"
 #include "player.h"
 
-void resetAll(int16_t hpmax,int16_t attack,int16_t defence,EnemyType type)
+void Fighter::resetAll(int16_t hpmax,int16_t attack,int16_t defence,EnemyType type)
 {
 	this->hpmax = hpmax;
 	this->hp = hpmax;
