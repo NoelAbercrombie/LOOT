@@ -114,9 +114,10 @@ void Battle::drawMenu(void)
 	const uint8_t PROGMEM textnum[] = { 4,3,1,3 };
 	const uint8_t PROGMEM textoffset[] = { 0,4,7,8 };
 
-	uint8_t menuID = static_cast<uint8_t>(menu);	//Unneeded for the moment, menu is already uint8_t
-	uint8_t count = pgm_read_byte(textnum+menuID);	//get number of items on page
-	uint8_t offset = pgm_read_byte(textoffset+menuID);	//text array offset
+	const uint8_t menuID = static_cast<uint8_t>(menu);	//Unneeded for the moment, menu is already uint8_t
+	const uint8_t count = pgm_read_byte(textnum+menuID);	//get number of items on page
+	const uint8_t offset = pgm_read_byte(textoffset+menuID);	//text array offset
+
 	char buffer[8];	//text buffer
 	for(uint8_t i=0; i<count; ++i)
 	{
