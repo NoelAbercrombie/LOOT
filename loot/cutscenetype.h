@@ -9,5 +9,6 @@ enum class CutsceneType : uint8_t
 	SceneEnd,
 	Credits,
 	OpenChest,
+	Gameover,
 };
 

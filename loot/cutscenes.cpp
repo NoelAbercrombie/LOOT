@@ -33,8 +33,9 @@ void Cutscenes::end()
 	complete = true;
 	if (stateNext != GameState::Null)
 	{
-		ab->setState(stateLast);	//I'm sorry.
-		ab->setState(stateNext);
+		ab->setState(stateLast);	//This hides the existence of the cutscene state
+		ab->setState(stateNext);	//makes state transition logic less confusing
+		//because of checking a list of previous states and skipping past cutscenes, just check the last one
 	}
 }
 
@@ -96,8 +97,7 @@ void Cutscenes::draw()
 			if(time<128)	time++;
 		    ab->setCursor(0,64-(time/2));
 		    ab->print(F("LOOT! - Epic Dungeon\n\nProgramming :\n @bakagamedev\n Pharap\nArt/Design : \n Migz (Gamerguy)"));
-		    break;
-		}
+		}; break;
 		case CutsceneType::OpenChest:
 		{
 			int8_t xoffset = 31;
@@ -126,6 +126,14 @@ void Cutscenes::draw()
 			}
 			if (draw)
 				ab->drawSpriteMaskedCentered(xoffset,yoffset,sprite,imgChest3Mask);
-		}
+		};	break;
+		case CutsceneType::Gameover:
+		{
+			ab->clear();
+			ab->print("GAMEOVER!");
+			//Wipe transition goes here
+			if (time<60)
+				end();
+		}; break;
 	}
 }

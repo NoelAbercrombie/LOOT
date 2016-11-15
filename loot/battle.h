@@ -51,5 +51,5 @@ public:
 	void end(void);
 	
 	//drawing helpers
-	void drawBar(const uint8_t x, const uint8_t y, const uint8_t width, const uint8_t value, const uint8_t capacity);
+	void drawBar(const uint8_t x, const uint8_t y, const uint8_t width, const uint8_t percent);
 };

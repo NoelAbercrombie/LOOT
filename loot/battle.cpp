@@ -1,6 +1,7 @@
 #include "battle.h"
 #include "button.h"
 #include "types.h"
+#include "cutscenes.h"
 #include "graphics.h"
 #include "fighter.h"
 #include "gamestate.h"
@@ -32,10 +33,14 @@ void Battle::step(void)
 		case battleMode::PlayerTurn:
 		{
 			playerTurn();
+			if(enemy.alive())	{	battleState = battleMode::EnemyTurn;	}
+			else	{	battleState = battleMode::win;	}
 		}; break;
 		case battleMode::EnemyTurn:
 		{
 			enemyTurn();
+			if(player.alive())	{	battleState = battleMode::Select;	}
+			else	{	battleState = battleMode::Lose;	}
 		}; break;
 		case battleMode::Win:
 		{
@@ -71,10 +76,12 @@ void Battle::start()
 void Battle::win()
 {
 	end();
+	ab->setState(GameState::Gameplay);
 }
 void Battle::lose()
 {
 	end();
+	cutscenes->start(CutsceneType::Gameover,GameState::Menu);
 }
 void Battle::end()
 {

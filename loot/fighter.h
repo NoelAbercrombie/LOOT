@@ -21,6 +21,7 @@ public:
 	void die(void);
 	void diehard(void);
 
+	bool alive(void)	{	return this->hp>0;	}
 	int16_t getHP(void)	{	return this->hp;	}
 	int16_t getHPMax(void)	{	return this->hpmax;	}
 	int8_t getHPPercent(void)	{	return clamp((this->hp/this->hpmax)*100,0,100);	}	//Does this work?

@@ -10,4 +10,5 @@ enum class GameState : uint8_t
 	Gameplay,
 	Battle,
 	Cutscene,
+	Gameover,
 };
