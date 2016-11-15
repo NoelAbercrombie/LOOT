@@ -121,9 +121,11 @@ void Battle::drawMenu(void)
 	for(uint8_t i=0; i<count; ++i)
 	{
 		strcpy_P(buffer, (PGM_P)pgm_read_word(&(texttable[offset+i])));	//wat
-		ab->setCursor(66,2+(i*8));
+		ab->setCursor(70,2+(i*8));
 		ab->print(buffer);
 	}
+	ab->setCursor(64,10+(menuSelect*8));	//draw a little selection pointer
+	ab->print(">");
 
 	if(menuID==static_cast<uint8_t>(battleMenu::Item))	//remove the cast once the type is sorted
 	{
