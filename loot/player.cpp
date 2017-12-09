@@ -2,7 +2,7 @@
 #include "world.h"
 #include "system.h"
 #include "direction.h"
-#include "TileType.h"
+#include "tiletype.h"
 #include "cutscenes.h"
 #include "cutscenetype.h"
 
