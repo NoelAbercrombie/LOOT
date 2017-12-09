@@ -95,7 +95,7 @@ void Cutscenes::draw()
 		{
 			if(time<128)	time++;
 		    ab->setCursor(0,64-(time/2));
-		    ab->print(F("LOOT! - Epic Dungeon\n\nProgramming :\n @bakagamedev\n Pharap\nArt/Design : \n Migz (Gamerguy) \n"));
+		    ab->print(F("LOOT! - Epic Dungeon\n\nProgramming :\n @bakagamedev\n Pharap\nArt/Design : \n Migz (Gamerguy)"));
 		    break;
 		}
 		case CutsceneType::OpenChest:
